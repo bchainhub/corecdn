@@ -1,0 +1,2 @@
+# corecdn
+CORE CDN
