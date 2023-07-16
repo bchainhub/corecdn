@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORE CDN</title>
+    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script>
+        var md = window.markdownit();
+        fetch('https://raw.githubusercontent.com/cryptohub-digital/corecdn/master/README.md')
+            .then(function(response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    return Promise.reject(response);
+                }
+            }).then(function(data) {
+                var htmlContent = md.render(data);
+                document.getElementById('content').innerHTML = htmlContent;
+            }).catch(function(err) {
+                document.getElementById('content').innerHTML = '<h2>Failed to load the documentation!</h2>';
+            });
+    </script>
+</body>
+</html>
