@@ -6,7 +6,7 @@ This repository serves as a CDN (Content Delivery Network) for storing and deplo
 
 The folder structure is as follows:
 
-```
+```txt
 [badge/mark]/[png/svg]/[resolution]/{name}.[png/svg]
 ```
 
@@ -19,7 +19,7 @@ The folder structure is as follows:
 
 You can access the image files through the following CDN URLs:
 
-1. **jsDelivr**: You can access the files using the URL: [https://cdn.jsdelivr.net/gh/cryptohub-digital/corecdn/{path}](https://cdn.jsdelivr.net/gh/cryptohub-digital/corecdn/{path}). Replace `{path}` with the path to the desired image file.
+1. **jsDelivr**: You can access the files using the URL: [https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}](https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}). Replace `{path}` with the path to the desired image file.
 
 2. **corecdn.info**: Alternatively, you can also access the files using the URL: [https://corecdn.info/{path}](https://corecdn.info/{path}). Again, replace `{path}` with the path to the specific image file.
 
@@ -30,7 +30,7 @@ To use the image files in your project, you can directly reference the URLs ment
 Here is an example of how you can use the CDN URLs in HTML:
 
 ```html
-<img src="https://cdn.jsdelivr.net/gh/cryptohub-digital/corecdn/{path}" alt="Image Name">
+<img src="https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}" alt="Image Name">
 ```
 
 Replace `{path}` with the actual path to the image file you want to display.
@@ -43,4 +43,4 @@ Please make sure to update any relevant tests when contributing to this project.
 
 ## License
 
-This software is licensed under the [CORE License](https://github.com/cryptohub-digital/core-license/blob/master/LICENSE).
+This software is licensed under the [CORE License](https://github.com/bchainhub/core-license/blob/master/LICENSE).
