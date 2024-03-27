@@ -8,11 +8,13 @@ This repository serves as a CDN (Content Delivery Network) for storing and deplo
 - [Fork repository](https://github.com/bchainhub/corecdn/fork)
 - [Open issue](https://github.com/bchainhub/corecdn/issues)
 
-## Copy&Paste
+## Click&Copy
 
-> Modify example link as you wish
+> Modify the example link as you wish
 
-<input type="text" value="https://corecdn.info/mark/256/corecoin.png" style="width: 100%" onClick="this.select();" />
+```url
+https://corecdn.info/mark/256/corecoin.png
+```
 
 ## Folder Structure and Path
 
