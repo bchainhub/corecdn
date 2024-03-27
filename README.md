@@ -2,18 +2,30 @@
 
 This repository serves as a CDN (Content Delivery Network) for storing and deploying PNG and SVG image files. The images are organized in a specific folder structure, and you can access them through two different CDN URLs.
 
+## Actions
+
+- [Open repository page](https://github.com/bchainhub/corecdn)
+- [Fork repository](https://github.com/bchainhub/corecdn/fork)
+- [Open issue](https://github.com/bchainhub/corecdn/issues)
+
+## Copy&Paste
+
+> Modify example link as you wish
+
+<input type="text" value="https://corecdn.info/mark/256/corecoin.png" style="width: 100%" onClick="this.select();" />
+
 ## Folder Structure and Path
 
 The folder structure is as follows:
 
 ```txt
-[badge/mark]/[png/svg]/[resolution]/{name}.[png/svg]
+[badge/mark]/[resolution]/{name}.[png/svg]
 ```
 
 - **badge/mark**: This directory contains the badge or mark images.
-- **png/svg**: Choose either the PNG or SVG directory based on the image format.
 - **resolution**: This directory stores images of different resolutions. The resolution should be an integer value and can be one of the following options: 16, 32, 48, 64, 128, or 256.
 - **{name}**: Replace this placeholder with the actual filename.
+- **png/svg**: Choose either the PNG or SVG directory based on the image format.
 
 ## CDN URLs
 

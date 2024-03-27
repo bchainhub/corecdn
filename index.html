@@ -3,13 +3,30 @@
 <head>
     <title>CORE CDN</title>
     <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+    <style>
+        html {
+            background-color: #323232;
+            color: #e0e0e0;
+            padding: 1rem;
+        }
+        a {
+            color: #a9b4ed;
+        }
+        a:visited {
+            color: #c8a9ed;
+        }
+        input {
+            font-size: 1.5rem;
+            padding: 0.3rem;
+        }
+    </style>
 </head>
 <body>
     <div id="content"></div>
 
     <script>
         var md = window.markdownit();
-        fetch('https://raw.githubusercontent.com/cryptohub-digital/corecdn/master/README.md')
+        fetch('https://raw.githubusercontent.com/bchainhub/corecdn/master/README.md')
             .then(function(response) {
                 if (response.ok) {
                     return response.text();
