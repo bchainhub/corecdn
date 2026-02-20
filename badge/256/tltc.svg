@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="none"><rect width="256" height="256" fill="#EF4800" rx="64"/><path fill="#2C0000" d="m125.328 153.984 7.415-27.393 17.558-6.292 4.367-16.098-.149-.4-17.283 6.194L149.688 64h-35.314l-16.285 60.024-13.596 4.873L80 145.493l13.586-4.868L83.988 176h93.987L184 153.984h-58.672Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g1">
+        <rect
+   x="48"
+   y="48"
+   width="32"
+   height="32"
+   style="fill:#ef4800;stroke-width:0.25"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g2">
+        <path
+   d="m 63.666,67.248 0.927,-3.424 2.1945,-0.7865 0.546,-2.0125 -0.01875,-0.05 L 65.1545,61.7495 66.711,56 H 62.29675 L 60.26125,63.503 58.5615,64.112 58,66.18675 59.69825,65.578 58.4985,70 H 70.24675 L 71,67.248 Z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.25"
+   id="path1" />
+    </g>
+</svg>

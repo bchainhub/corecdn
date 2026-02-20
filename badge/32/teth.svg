@@ -1,1 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none"><rect width="32" height="32" fill="#EF4800" rx="8"/><path fill="#2C0000" d="m16.009 6.57-.13.43v12.47l.13.126 5.934-3.422-5.934-9.604Z" opacity=".7"/><path fill="#2C0000" d="m16.005 6.57-5.935 9.604 5.935 3.422V6.57Z"/><path fill="#2C0000" d="m16.007 20.692-.073.087v4.442l.073.208 5.938-8.156-5.938 3.42Z" opacity=".7"/><path fill="#2C0000" d="M16.005 25.43v-4.738l-5.935-3.42 5.935 8.157Zm-5.935-9.256 5.935 3.421v-6.052l-5.935 2.631Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(4,0,0,4,-496,-496)"
+   id="g1">
+        <rect
+   x="124"
+   y="124"
+   width="8"
+   height="8"
+   style="fill:#ef4800;stroke-width:0.03125"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-496,-496)"
+   id="g2">
+        <path
+   d="m 128.00216,125.64259 -0.0324,0.10741 v 3.11741 l 0.0324,0.0316 1.48359,-0.85538 -1.48359,-2.40103 z"
+   style="fill:#2c0000;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.03125"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-496,-496)"
+   id="g3">
+        <path
+   d="m 128.00072,125.64259 -1.48363,2.40103 1.48363,0.85538 z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.03125"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-496,-496)"
+   id="g4">
+        <path
+   d="m 128.00069,129.17291 -0.0182,0.0217 v 1.11046 l 0.0182,0.052 1.4845,-2.03916 z"
+   style="fill:#2c0000;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.03125"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-496,-496)"
+   id="g5">
+        <path
+   d="m 128.00072,130.35716 v -1.18425 l -1.48363,-0.85491 z m -1.48363,-2.31366 1.48363,0.85534 v -1.51309 z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.03125"
+   id="path4" />
+    </g>
+</svg>

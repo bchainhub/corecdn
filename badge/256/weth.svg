@@ -1,1 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="none"><rect width="256" height="256" fill="#000" rx="64"/><path fill="#fff" d="M128.1 52.563 127.062 56v99.757l1.038 1.01 47.475-27.372L128.1 52.563Z" opacity=".7"/><path fill="#fff" d="m128.054 52.563-47.476 76.833 47.476 27.372V52.563Z"/><path fill="#fff" d="m128.054 165.533-.585.696v35.535l.585 1.665 47.503-65.253-47.503 27.357Z" opacity=".7"/><path fill="#fff" d="M128.054 203.429v-37.896l-47.476-27.357 47.476 65.253Zm-47.476-74.037 47.476 27.371v-48.419l-47.476 21.048Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g1">
+        <rect
+   x="48"
+   y="48"
+   width="32"
+   height="32"
+   id="rect1"
+   style="stroke-width:0.25" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g2">
+        <path
+   d="m 64.0125,54.57025 -0.12975,0.43 v 12.4695 l 0.13,0.12625 5.934,-3.4215 z"
+   style="fill:#ffffff;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.25"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g3">
+        <path
+   d="m 64.00675,54.57025 -5.9345,9.60425 5.9345,3.4215 V 54.57 Z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.25"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g4">
+        <path
+   d="m 64.00675,68.6915 -0.07325,0.087 v 4.442 l 0.07325,0.20825 5.938,-8.15675 z"
+   style="fill:#ffffff;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.25"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-384,-384)"
+   id="g5">
+        <path
+   d="M 64.00675,73.42875 V 68.6915 L 58.07225,65.272 Z M 58.0725,64.174 64.00675,67.5955 V 61.543 l -5.9345,2.631 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.25"
+   id="path4" />
+    </g>
+</svg>

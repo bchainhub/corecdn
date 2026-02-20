@@ -1,1 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="none"><rect width="128" height="128" fill="#000" rx="32"/><path fill="#fff" d="m64.05 26.281-.519 1.72v49.878l.52.505 23.736-13.686L64.05 26.281Z" opacity=".7"/><path fill="#fff" d="M64.027 26.281 40.289 64.698l23.738 13.686V26.28Z"/><path fill="#fff" d="m64.027 82.766-.293.348v17.768l.293.833 23.752-32.627-23.752 13.678Z" opacity=".7"/><path fill="#fff" d="M64.027 101.715V82.766L40.289 69.088l23.738 32.627ZM40.29 64.696l23.737 13.686v-24.21L40.289 64.696Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g1">
+        <rect
+   x="56"
+   y="56"
+   width="16"
+   height="16"
+   id="rect1"
+   style="stroke-width:0.125" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g2">
+        <path
+   d="m 64.00625,59.285125 -0.06487,0.215 v 6.23475 l 0.065,0.06312 2.967,-1.71075 z"
+   style="fill:#ffffff;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.125"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g3">
+        <path
+   d="m 64.003375,59.285125 -2.96725,4.802125 2.96725,1.71075 v -6.513 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.125"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g4">
+        <path
+   d="m 64.003375,66.34575 -0.03663,0.0435 v 2.221 l 0.03663,0.104125 2.969,-4.078375 z"
+   style="fill:#ffffff;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.125"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g5">
+        <path
+   d="M 64.003375,68.714375 V 66.34575 L 61.036125,64.636 Z M 61.03625,64.087 64.003375,65.79775 V 62.7715 l -2.96725,1.3155 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.125"
+   id="path4" />
+    </g>
+</svg>

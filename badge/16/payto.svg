@@ -1,1 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" viewBox="0 0 16 16"><use xlink:href="#a" width="16" height="16"/><defs><image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABr0lEQVQ4jZWTyyuscRjHP7+fdwwjjZGFGRbk6CyUKUcoFIsRK7JQNsrC9ixHTp2ysXhtLSymzuaUhX/BAomE5J5yHeYdIXM5h7kY02sxL82lc4zv7vn1fL7Ppd8jAMYXxqqBaaALsPN/3QBLgFt1eXzCgHeB8g/AbAUApzQqfxbGYFRJqu0MddX0MtQwSrHJAkB3TR/NjnZMBYU5qQpZM5earfTUDXD954JoIoLVbMNV148Ukt4vg0yv/uA5GX9LdxR0jHybTDdQpMLR/S5b2irxZMyId0BAbVk9wVgA7a/3PV9m9xRJPHEVPiccDwLwlHjkKnyON3QGQFlR5rqU9MBqtvG97SeXwRN+783irGyh/+swAkGxyYKu62xqK/82cFa2IBAcP+xjMZXQZG8DQEfn4G6btetFgrGHDAMxvjCmpz+UFJYy0aFy+6gxszGVPWGOcnbQ7GhHkQrrvuUP4RwDIQStVZ1EXyLs3G7kZaCQ+tt2AFtRBZehM7yhUxLJ53x4v0LqMIYBAtF75g9/5VXZ0JIE3KQO47MKAG6pujw+wAnMAf48QL+R26i6PNoreYqHBl4N08AAAAAASUVORK5CYII=" id="a" width="16" height="16"/></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg8"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs8" />
+    <g
+   transform="matrix(4,0,0,4,-504,-504)"
+   id="g1">
+        <rect
+   x="126"
+   y="126"
+   width="4"
+   height="4"
+   style="fill:#77bb65;stroke-width:0.015625"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(9.375,0,0,9.375,8,8)"
+   id="g8">
+        <g
+   transform="translate(-32,-32)"
+   id="g7">
+            <clipPath
+   id="_clip1">
+                <rect
+   x="0"
+   y="0"
+   width="64"
+   height="64"
+   id="rect2" />
+            </clipPath>
+            <g
+   clip-path="url(#_clip1)"
+   id="g6">
+                <g
+   transform="matrix(0.632461,0,0,0.632461,-188.632,0.376939)"
+   id="g5">
+                    <g
+   id="g4">
+                        <g
+   id="g3">
+                            <g
+   id="g2">
+                                <path
+   d="m 348.24295,50.468767 h 7.8e-4 l -0.12895,0.3125 h 0.3125 l 0.12895,-0.3125 h -7.8e-4 l 0.12895,-0.3125 h -0.3125 z m 1.39145,-0.78125 c 0,0.258594 -0.21015,0.46875 -0.46875,0.46875 h -0.48125 l 0.13282,-0.3125 h 0.34843 c 0.0859,0 0.15625,-0.07031 0.15625,-0.15625 0,-0.08594 -0.0703,-0.15625 -0.15625,-0.15625 h -0.21562 l 0.12969,-0.3125 h 0.0859 c 0.2586,0 0.46875,0.210156 0.46875,0.46875 z m -1.13672,0.15625 h -0.3125 l -0.12895,0.3125 h 0.3125 z m 0.22074,-0.625 h -0.3125 l -0.12895,0.3125 h 0.3125 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.015625"
+   id="path2" />
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

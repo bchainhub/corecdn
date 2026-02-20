@@ -1,1 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" viewBox="0 0 48 48"><use xlink:href="#a" width="48" height="44.077" y="2.003" transform="scale(1 .97948)"/><defs><image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAtCAYAAADoSujCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEaklEQVRogb2ZX4gVVRzHP3N3M9w1ZAmLGrGXRaXMB4kegv5wiYgh+mN/sLGhF62G1qDa3DRbQuzPuhmR2pTrU1PXwmyfGvJlHoQKAh/azD9FhNAkbbQgaSrbenuYe7fh7pzfnNk7cz+wLPf8fufM93d+M2d+54yBJqZvjQKDuv4Fcgnoj5zgtzRjRWcE07f6gGeKVJWDMZV40AwA2AQsKkZPLi4Cb0gOmQGYvtULPFeUopx4kROckRx0MvA0cHUxenLxD/BWlpMYgOlbC4AXilKUk72RE0xmOXVn2J8ETMH+NXAhjypdugxGdfyUAZi+1QVsFvp+D9weOUE9p7ZM3NDeAqz14MMsX+kWehToF+zbSxK/CHgRGHFD+/osfymALYLtB2A8pzZdNhEvGouBvVnOqQGYvnUfsFroV9bsX0U8+00edEN7rdRHlQFp9o8Bh3Jq06U5+0n2uKG9WNVhTgCmb90J3CZcpMzZT1uyrwP1ipSWga3CdX4EPs8nTZu02W+ywQ3tO9IMRvKH6VtrgKPCRdZFTvCZpMIN7T7gIclHwU7kN/5PwGqvWruUbGx9D0izfwI4qCFkqPFXNMuBYeCVZONsBkzfWgEcR/1g25ETHJCu4Ib2EuBXoLctqWqmgVu8am2i2ZAU+zJq8ScA8dZp8BLliQe4AhhzQ3tWZwXA9K1lwHqh447ICS5LI7uhfQ3wbBEqM7iVRHnfjGSQOLo0TgGfagy8GehpS5o+O9zQvgGgYvrWEmCD5Kwx+9cCboECs+gFPoA4A88DCxWOPwPig9tgiM7NfpN73dBe372mr2dVxeBIo7Ge/H9xpj5++P5DM1kjHZ06v/JyfXaMjtFl8ED30p4Fx1DXPkvd0H7fq9b+lQaKLkyfJM5kp3miArxLvPtPox94XGOgEeI9bCf5KnKCTypetTYJ7Bcct7mh3SWNFDnBH4BXqDyZ8zTOqZrL6NuA6jZZDqzTGHQnncvCtsgJTkMjAK9aOw18LHR4VSMLk2jsoArgO+C95o9k6TDC/6tQKyuAxzQGHyVOb1lMAxuT76XZALxq7STwhdB5WCMLfwJ72lUpMBo5wUSyobWcfhN4WNF5JfFJRVZZMUJcu+claz9wCtje2mi0NrihfRi4RzHIceBmr1oTS4v5YPrWVuB1hbkO3BU5wZyXZVr5LJ0G3wg8kl+eFruBvxS2/WniIT2AI8C3woWGk/V4UURO8DfwTorpDPE+I5U5QrxqrY6chZtQPyftkpaFgcgJzqo6qGbyS2BCYYNys7Ar0TQeOYG0MqYH0MiCdDa/ivmdPOjQzMJZYCDLWZrFg8Avgr2sLJwjzsJQ5AS/Z/nPWUaTuKG9EdgnuHxDCfVPvV43ZurYY3cfaPsDx0fAa4DqmFs6gpw3hmHQbTCI/H0CyPjE1DgF2yX5lMhAY68tonMP7wOm2teTm4XEZ1UimQF41do5EuVrh3GzvtLoriK7KbdMVnEl8rcKvQC8am2Kzm4ZkzzlhvYylfE/lBM1HddzB8UAAAAASUVORK5CYII=" id="a" width="48" height="45"/></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="74.181717"
+   height="68.11837"
+   viewBox="0 0 74.181717 68.11837"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(0.916938,0,0,0.916938,37.090857,34.059176)"
+   id="g5">
+        <g
+   transform="translate(-558.38,-512.74)"
+   id="g4">
+            <g
+   id="Layer_2">
+                <g
+   id="Layer_1-2">
+                    <path
+   d="m 598.83078,512.74435 -16.99805,-26.03895 -6.65897,13.0202 h -21.99662 l -6.69447,13.01947 z"
+   style="fill:#69be5a;fill-rule:nonzero;stroke-width:0.0724431"
+   id="path1" />
+                    <path
+   d="m 535.95451,475.59553 -18.02529,37.15461 12.42037,-0.0181 13.20203,-26.02736 38.27894,-7.2e-4 5.77733,-11.10842 z"
+   style="fill:#1ba34a;fill-rule:nonzero;stroke-width:0.0724431"
+   id="path2" />
+                    <path
+   d="m 546.48267,512.7342 6.69447,13.0202 h 21.99662 l 6.65897,13.01948 16.99805,-26.03823 z"
+   style="fill:#1ba34a;fill-rule:nonzero;stroke-width:0.0724431"
+   id="path3" />
+                    <path
+   d="m 535.95451,549.88447 -18.02529,-37.15461 12.42037,0.0174 13.20203,26.02809 h 38.27894 l 5.77733,11.10914 z"
+   style="fill:#69be5a;fill-rule:nonzero;stroke-width:0.0724431"
+   id="path4" />
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

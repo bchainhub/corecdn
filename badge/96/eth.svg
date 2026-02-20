@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="96"
+   height="96"
+   viewBox="0 0 96 96"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg7"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs7" />
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g1">
+        <rect
+   x="58"
+   y="58"
+   width="12"
+   height="12"
+   style="fill:#e8e8e8;stroke-width:0.09375"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g2">
+        <path
+   d="m 64.003187,60.463844 -0.04856,0.16125 v 4.676062 l 0.04856,0.04734 2.225438,-1.283062 z"
+   style="fill:#343434;fill-rule:nonzero;stroke-width:0.09375"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g3">
+        <path
+   d="m 64.001031,60.463844 -2.225437,3.601594 2.225437,1.283062 v -4.88475 z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:0.09375"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g4">
+        <path
+   d="m 64.001031,65.759312 -0.02737,0.03263 v 1.66575 l 0.02737,0.07809 2.22675,-3.058781 z"
+   style="fill:#3c3c3b;fill-rule:nonzero;stroke-width:0.09375"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g5">
+        <path
+   d="M 64.001031,67.535781 V 65.759312 L 61.775594,64.477 Z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:0.09375"
+   id="path4" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g6">
+        <path
+   d="M 64.0015,65.348313 66.226844,64.06525 64.0015,63.078625 Z"
+   style="fill:#141414;fill-rule:nonzero;stroke-width:0.09375"
+   id="path5" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-464,-464)"
+   id="g7">
+        <path
+   d="m 61.775594,64.06525 2.225437,1.283063 v -2.269688 z"
+   style="fill:#393939;fill-rule:nonzero;stroke-width:0.09375"
+   id="path6" />
+    </g>
+</svg>

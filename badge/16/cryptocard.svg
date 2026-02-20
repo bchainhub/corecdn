@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" viewBox="0 0 16 16"><use xlink:href="#a" width="16" height="16"/><defs><image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABx0lEQVQ4jZWTz0tUURTHP/fNgxAlQbHQmXSli0EbWmgSBm6EYXClG6WZP2AEqahmE1SbFkq4COkPaGigZaQDikok/gSJKQV1EajzJpspY0hlnBnfbfHGx5v3ovS7uud87/fccw7fKwDc0YAHGAW6gXr+jW/AByCiheJJURIngJr/CO04AHxK6eWLiilpRlSMtk2owsXzjiEq1EsOxcTOPNPJFWuqW8U2c2/Tbe40+1nLbFLQC2Y+d5rn048te80G4Y4G5FmkCMFM7yuy+UP6piJITIqwt5+jYo7X25NlFVRr4L92i5bqRgZmHiORPPAF8VReAaDH04EqVGa1VbSjjLOAQHC3bYCV9DoL+wna67zcbxt07GHk5jDBuSdmrFhJKSUgjLOl/bI7trzrcl/zs7Pg50mWsLef1fQGy+l1QLB3+J2NX19xV9VR1HVCc0/5XTj++w6m9pbYzu7y0BdkYT/B2Oc3JhfOGktMHWeskvICupS8/PKW8a5HvPO/oKAXTS53mufe4phjJBXD26YX3u98pPNqKxUup5Fu1LbYjZQS7mggBjjXfT7EFCCC8TEuigMgomiheBLwATEgdQ5hqnT3uhaKa38AQJuZ97AROe0AAAAASUVORK5CYII=" id="a" width="16" height="16"/></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(4,0,0,4,-504,-504)"
+   id="g2">
+        <rect
+   x="126"
+   y="126"
+   width="4"
+   height="4"
+   style="fill:#1ba34a;stroke-width:0.015625"
+   id="rect1" />
+        <g
+   transform="matrix(0.145063,0,0,0.145063,47,53.6207)"
+   id="g1">
+            <path
+   d="m 549.65555,512.73576 3.88569,-8.00938 h 11.14094 l -1.2461,2.39594 -8.25625,1.6e-4 -2.8475,5.61375 v 0.003 l 2.8475,5.61391 h 8.25625 l 1.2461,2.39609 h -11.14094 l -3.88569,-8.00938 h -0.002 l 10e-4,-0.002 -10e-4,-0.002 z m 17.446,10e-4 -3.665,-5.61438 -1.43625,2.80829 h -4.74437 l -1.44271,2.80578 h -10e-4 l 6.1e-4,10e-4 -6.1e-4,10e-4 h 10e-4 l 1.44271,2.80594 h 4.74437 l 1.43625,2.80812 3.665,-5.61422 h 10e-4 l -6.2e-4,-9.3e-4 6.2e-4,-9.4e-4 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.015625"
+   id="path1" />
+        </g>
+    </g>
+</svg>

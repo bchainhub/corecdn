@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="2005.1926"
+   height="3184.5032"
+   viewBox="0 0 2005.1926 3184.5032"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg6"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs6" />
+    <g
+   transform="matrix(4.00013,0,0,4.00013,490.40166,1080.251)"
+   id="g6">
+        <path
+   d="m 128.17045,-270.05397 -5.47647,18.14294 V 274.4923 l 5.47647,5.32719 250.51498,-144.43446 z"
+   style="fill:#343434;fill-rule:nonzero;stroke-width:3.10986"
+   id="path1" />
+        <path
+   d="m 127.92788,-270.05397 -250.52431,405.439 250.52431,144.43446 z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:3.10986"
+   id="path2" />
+        <path
+   d="m 127.91855,326.07559 -3.08498,3.66963 V 517.2575 l 3.08498,8.78847 250.67047,-344.3302 z"
+   style="fill:#3c3c3b;fill-rule:nonzero;stroke-width:3.10986"
+   id="path3" />
+        <path
+   d="M 127.92788,526.04597 V 326.07559 L -122.59643,181.71577 Z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:3.10986"
+   id="path4" />
+        <path
+   d="M 127.96831,279.79772 378.48329,135.36326 127.96831,24.294523 Z"
+   style="fill:#141414;fill-rule:nonzero;stroke-width:3.10986"
+   id="path5" />
+        <path
+   d="m -122.59332,135.36326 250.5212,144.43446 V 24.294523 L -122.59643,135.36326 Z"
+   style="fill:#393939;fill-rule:nonzero;stroke-width:3.10986"
+   id="path6" />
+    </g>
+</svg>

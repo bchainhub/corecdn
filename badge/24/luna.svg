@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg3"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+    <g
+   transform="matrix(8,0,0,8,-500,-500)"
+   id="g1">
+        <rect
+   x="62.5"
+   y="62.5"
+   width="3"
+   height="3"
+   style="fill:url(#_Linear1);stroke-width:0.0234375"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-500,-500)"
+   id="g2">
+        <path
+   d="m 64.284063,64.426328 c -0.391758,0 -0.710415,-0.318703 -0.710415,-0.710461 0,-0.391758 0.31868,-0.710625 0.710438,-0.710625 0.391758,0 0.710601,0.318703 0.710601,0.710625 0,0.391945 -0.318843,0.710438 -0.710624,0.710438 z m 0,-1.143375 c -0.238594,0 -0.432727,0.194133 -0.432727,0.43275 0,0.238594 0.194133,0.43275 0.43275,0.43275 0.238594,0 0.43275,-0.194133 0.43275,-0.43275 0,-0.238617 -0.194133,-0.43275 -0.432773,-0.43275 z"
+   style="fill:#eeedee;fill-rule:nonzero;stroke-width:0.0234375"
+   id="path1" />
+    </g>
+    <defs
+   id="defs3">
+        <linearGradient
+   id="_Linear1"
+   x1="0"
+   y1="0"
+   x2="1"
+   y2="0"
+   gradientUnits="userSpaceOnUse"
+   gradientTransform="matrix(0,3,-3,0,64,62.5)"><stop
+     offset="0"
+     style="stop-color:rgb(55,55,55);stop-opacity:1"
+     id="stop2" /><stop
+     offset="1"
+     style="stop-color:rgb(36,36,36);stop-opacity:1"
+     id="stop3" /></linearGradient>
+    </defs>
+</svg>

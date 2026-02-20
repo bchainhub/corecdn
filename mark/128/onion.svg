@@ -1,1 +1,21 @@
-<svg width="128" height="128" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="m63.75 0 55.397 32v64l-55.398 32L8.352 96V32L63.749 0Zm0 30.358S93.323 54.782 93.355 73.77c.03 16.527-19.3 23.87-29.552 23.87-10.252 0-29.337-6.684-29.634-23.922-.318-18.44 29.58-43.36 29.58-43.36Z" fill="#E52D2F"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="147.87537"
+   viewBox="0 0 128 147.87537"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs1" />
+    <g
+   transform="matrix(4,0,0,4,-445.996,-438.06232)"
+   id="g1">
+        <path
+   d="m 127.499,109.51558 16,9.24221 v 18.48442 l -16,9.24221 -16,-9.24221 v -18.48442 l 16.00014,-9.24221 z m 0,8.76797 c 0,0 8.54182,7.05397 8.55107,12.53821 0.009,4.77317 -5.5745,6.89397 -8.53547,6.89397 -2.96098,0 -8.4728,-1.93018 -8.55887,-6.90899 -0.0917,-5.32553 8.54327,-12.52319 8.54327,-12.52319 z"
+   style="fill:#e52d2f;stroke-width:0.14441"
+   id="path1" />
+    </g>
+</svg>

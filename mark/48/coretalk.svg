@@ -1,1 +1,25 @@
-<svg width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><mask id="b" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="2" width="48" height="44"><path d="M47.899 2H.168v44h47.73V2Z" fill="#fff"/></mask><g mask="url(#b)"><path d="m34.995 2.213 12.912 21.98-12.98 22.02-13.104-21.98 13.172-22.02Z" fill="#97EF97"/><path d="m21.837 24.213 13.127 22h-21.91l-12.886-22 12.886-22h21.91l-13.127 22Z" fill="#009E21"/></g></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h48v48H0z"/></clipPath></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="87.913696"
+   height="80.402618"
+   viewBox="0 0 87.913696 80.402618"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(4.00015,0,0,4.00015,-468.05035,-472.59992)"
+   id="g2">
+        <path
+   d="m 133.02912,118.14572 5.95668,10.05051 -5.95436,10.04922 -6.04519,-10.05059 z"
+   style="fill:#97ef97;fill-rule:nonzero;stroke-width:0.0858533"
+   id="path1" />
+        <path
+   d="m 126.98591,128.19554 6.04441,10.04991 h -10.08879 l -5.93333,-10.04991 5.93333,-10.04999 h 10.08879 z"
+   style="fill:#009e21;fill-rule:nonzero;stroke-width:0.0858533"
+   id="path2" />
+    </g>
+</svg>

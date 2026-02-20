@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="none"><g fill="#000" clip-path="url(#a)"><path d="m128.116 0-1.761 5.834v169.269l1.761 1.713 80.556-46.444L128.116 0Z" opacity=".7"/><path d="M128.038 0 47.48 130.372l80.558 46.444V0Z"/><path d="m128.035 191.69-.992 1.18v60.296l.992 2.826L208.64 145.27l-80.605 46.42Z" opacity=".7"/><path d="M128.038 255.992V191.69L47.48 145.27l80.558 110.722ZM47.48 130.365l80.558 46.444V94.65L47.48 130.365Z"/></g><defs><clipPath id="a"><rect width="256" height="256" fill="#fff" rx="64"/></clipPath></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="256.00046"
+   height="406.5585"
+   viewBox="0 0 256.00046 406.5585"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs1" />
+    <g
+   transform="translate(-241.87353,-308.72078)"
+   id="g1">
+        <path
+   d="m 369.81365,715.27128 v 0.008 l -0.002,-0.004 -0.002,0.004 -0.004,-0.0119 L 241.874,539.43396 369.81127,613.15563 497.82318,539.43396 Z m 0,-125.85723 0.12387,0.1203 127.93648,-73.76098 -127.93648,-207.05259 -0.12387,0.41053 v -0.41053 l -127.93012,207.0375 -0.01,0.004 0.005,0.003 -0.005,0.008 127.93965,73.76098 z"
+   style="fill-rule:nonzero;stroke-width:0.39703"
+   id="path1" />
+    </g>
+</svg>

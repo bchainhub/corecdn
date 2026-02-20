@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none"><path fill="#BEBEBE" d="m29.44 48.206 3.957-14.675 9.37-3.37 2.33-8.625-.08-.214-9.223 3.318L42.44 0H23.594l-8.69 32.156-7.256 2.61-2.398 8.891 7.25-2.608L7.378 60h50.157l3.215-11.794H29.44Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="63.999966"
+   height="69.189171"
+   viewBox="0 0 63.999966 69.189171"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs1" />
+    <g
+   transform="matrix(4.26667,0,0,4.26667,-531.20029,-477.40594)"
+   id="g1">
+        <path
+   d="m 131.03764,124.9204 1.06959,-3.96608 2.53229,-0.91101 0.62987,-2.33088 -0.0216,-0.0578 -2.49263,0.89682 1.79595,-6.65952 h -5.09344 l -2.34865,8.6908 -1.96108,0.70547 -0.64797,2.40291 1.95946,-0.70487 -1.38412,5.12189 h 13.55566 l 0.86898,-3.1877 z"
+   style="fill:#bebebe;fill-rule:nonzero;stroke-width:0.0675675"
+   id="path1" />
+    </g>
+</svg>

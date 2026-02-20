@@ -1,1 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" viewBox="0 0 32 32"><use xlink:href="#a" width="32" height="29.384" y="1.335" transform="scale(1 .97948)"/><defs><image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAeCAYAAABNChwpAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAC2UlEQVRIia2XTWjUQBiGnyy11aJYQVSIaE+iPaigiFTwsHppwHoR0cAcFCrEHxSFiv/V+kNVKCIasOAluvRShILTgyUHQRTxoihSFcXCYD0I9lCl1m49JNum06S77uaFQPJ973zvOzPJzMQgAaZn1QMfgaokThnYqYTsjQYys5BbUxZ/pYsnGjA9aymwL0VxgPNxwaQROA7MTVH8uRKyLy4xY4hNz6oDHC08DlwG/pajvqK2+q1KyMXN8WFggRZ7oIRsK0fc8e0twMP1vv3EzeZG9Py0KTA9qxY4qnEKvS8XbcBK4EpcUn8HDgCLtVhOCfmpHOWw99vDxyOOb29KNGB6VjVwQstX2vuLmlaX49tzooToOyCA5VqBbiXkB72q49s1QGMR8XpgmxZbS7C+TE6HAWB6VgZ4D6yKkPNAgxJyIMbAMaCziIEkjALr3GxuAKamYJcmDkHv48TnASfLFAeoAe45vm1EDZzSSHmgPaGAAyyrwADAVqAFwDA9qwmQGqFbCbl3hrJv1wJfgCUVGgAYBtZkgNNaYrbeH0xJHGAhcKeq2azTEwZguDEtetXPlLSnkAGuxRg4l8C/C3xPSXsYOJQB+oDXWnK349sNegsl5C/gekoGWpWQ3zJuNjcBXNWSBnA2oaELDFUo/hTogqnPsIfg+BXFHse3V+stlZC/gY4KxEeBFiXkxKQBN5sbjylabBSyRa79CW3bo8u7UbhxfLsa+AyYEXIeaCgsm/8L07P6mb4fvAE2KiHHCoHJ3dDN5v4AN7UaGZJHoRRciNznCYZ+LErQzwNdwA8tZju+re8TJUEJ+QzoDx9vKyFf6pxpBsIj060YzplyDIRoA74m1TD0gOPbi4BBYH4kPE6wh4/p/FIwODL67vGOnkclGQhNdBAcHNLCC6AxXHOmIem/oJPge00Lm4GmuESsATebGwLup2gA4FLhEFLUQIgbBHOfFjYAzXrwHwM8xwzANRDnAAAAAElFTkSuQmCC" id="a" width="32" height="30"/></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="49.454464"
+   height="45.41227"
+   viewBox="0 0 49.454464 45.41227"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(0.916938,0,0,0.916938,24.727232,22.706145)"
+   id="g5">
+        <g
+   transform="translate(-558.38,-512.74)"
+   id="g4">
+            <g
+   id="Layer_2">
+                <g
+   id="Layer_1-2">
+                    <path
+   d="m 585.34718,512.7429 -11.33203,-17.3593 -4.43931,8.68013 h -14.66442 l -4.46297,8.67965 z"
+   style="fill:#69be5a;fill-rule:nonzero;stroke-width:0.0482954"
+   id="path1" />
+                    <path
+   d="m 543.42968,487.97702 -12.01686,24.76974 8.28024,-0.0121 8.80135,-17.35157 25.51929,-4.9e-4 3.85156,-7.40561 z"
+   style="fill:#1ba34a;fill-rule:nonzero;stroke-width:0.0482954"
+   id="path2" />
+                    <path
+   d="m 550.44845,512.73614 4.46297,8.68013 h 14.66442 l 4.43931,8.67965 11.33203,-17.35882 z"
+   style="fill:#1ba34a;fill-rule:nonzero;stroke-width:0.0482954"
+   id="path3" />
+                    <path
+   d="m 543.42968,537.50298 -12.01686,-24.76974 8.28024,0.0116 8.80135,17.35205 h 25.51929 l 3.85156,7.4061 z"
+   style="fill:#69be5a;fill-rule:nonzero;stroke-width:0.0482954"
+   id="path4" />
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

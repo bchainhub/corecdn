@@ -1,1 +1,25 @@
-<svg width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><mask id="b" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="3" width="64" height="58"><path d="M63.492 3H.574v58h62.918V3Z" fill="#fff"/></mask><g mask="url(#b)"><path d="m46.485 3.28 17.02 28.974-17.11 29.027L29.12 32.308 46.485 3.28Z" fill="#97EF97"/><path d="m29.138 32.28 17.304 29H17.56l-16.985-29 16.985-29h28.882l-17.304 29Z" fill="#009E21"/></g></g><defs><clipPath id="a"><path fill="#fff" transform="translate(0 3)" d="M0 0h64v58H0z"/></clipPath></defs></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="117.21824"
+   height="107.20346"
+   viewBox="0 0 117.21824 107.20346"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(4.00015,0,0,4.00015,-453.39808,-459.1995)"
+   id="g2">
+        <path
+   d="m 134.7065,114.7958 7.94223,13.40067 -7.93914,13.39896 -8.06026,-13.40079 z"
+   style="fill:#97ef97;fill-rule:nonzero;stroke-width:0.114471"
+   id="path1" />
+        <path
+   d="m 126.64887,128.19556 8.05923,13.39987 h -13.45173 l -7.9111,-13.39987 7.9111,-13.39999 h 13.45173 z"
+   style="fill:#009e21;fill-rule:nonzero;stroke-width:0.114471"
+   id="path2" />
+    </g>
+</svg>

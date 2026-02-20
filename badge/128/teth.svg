@@ -1,1 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="none"><rect width="128" height="128" fill="#EF4800" rx="32"/><path fill="#2C0000" d="m64.034 26.281-.518 1.72v49.878l.518.505 23.738-13.686-23.738-38.417Z" opacity=".7"/><path fill="#2C0000" d="M64.011 26.281 40.273 64.698l23.738 13.686V26.28Z"/><path fill="#2C0000" d="m64.011 82.766-.292.348v17.768l.292.833 23.752-32.627-23.752 13.678Z" opacity=".7"/><path fill="#2C0000" d="M64.011 101.715V82.766L40.273 69.088l23.738 32.627ZM40.273 64.696l23.738 13.686v-24.21L40.273 64.696Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(4,0,0,4,-448,-448)"
+   id="g1">
+        <rect
+   x="112"
+   y="112"
+   width="32"
+   height="32"
+   style="fill:#ef4800;stroke-width:0.125"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-448,-448)"
+   id="g2">
+        <path
+   d="M 128.00862,118.57038 127.87887,119 v 12.46962 l 0.12975,0.12625 5.93438,-3.4215 -5.93438,-9.60412 z"
+   style="fill:#2c0000;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.125"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-448,-448)"
+   id="g3">
+        <path
+   d="m 128.00287,118.57038 -5.93449,9.60412 5.93449,3.4215 z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.125"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-448,-448)"
+   id="g4">
+        <path
+   d="m 128.00275,132.69162 -0.073,0.087 v 4.44188 l 0.073,0.20812 5.938,-8.15662 z"
+   style="fill:#2c0000;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.125"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-448,-448)"
+   id="g5">
+        <path
+   d="m 128.00287,137.42862 v -4.737 l -5.93449,-3.41962 z m -5.93449,-9.25462 5.93449,3.42137 V 125.543 Z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.125"
+   id="path4" />
+    </g>
+</svg>

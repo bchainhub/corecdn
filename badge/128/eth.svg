@@ -1,1 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="none"><rect width="128" height="128" fill="#E8E8E8" rx="32"/><path fill="#343434" d="m64.034 26.281-.518 1.72v49.878l.518.505 23.738-13.686-23.738-38.417Z"/><path fill="#8C8C8C" d="M64.011 26.281 40.273 64.698l23.738 13.686V26.28Z"/><path fill="#3C3C3B" d="m64.011 82.766-.292.348v17.768l.292.833 23.752-32.627-23.752 13.678Z"/><path fill="#8C8C8C" d="M64.011 101.715V82.766L40.273 69.088l23.738 32.627Z"/><path fill="#141414" d="m64.016 78.382 23.737-13.686-23.737-10.524v24.21Z"/><path fill="#393939" d="m40.273 64.696 23.738 13.686v-24.21L40.273 64.696Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg7"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs7" />
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g1">
+        <rect
+   x="56"
+   y="56"
+   width="16"
+   height="16"
+   style="fill:#e8e8e8;stroke-width:0.125"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g2">
+        <path
+   d="m 64.00425,59.285125 -0.06475,0.215 v 6.23475 l 0.06475,0.06312 2.96725,-1.71075 z"
+   style="fill:#343434;fill-rule:nonzero;stroke-width:0.125"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g3">
+        <path
+   d="m 64.001375,59.285125 -2.96725,4.802125 2.96725,1.71075 v -6.513 z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:0.125"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g4">
+        <path
+   d="m 64.001375,66.34575 -0.0365,0.0435 v 2.221 l 0.0365,0.104125 2.969,-4.078375 z"
+   style="fill:#3c3c3b;fill-rule:nonzero;stroke-width:0.125"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g5">
+        <path
+   d="M 64.001375,68.714375 V 66.34575 L 61.034125,64.636 Z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:0.125"
+   id="path4" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g6">
+        <path
+   d="M 64.002,65.79775 66.969125,64.087 64.002,62.7715 Z"
+   style="fill:#141414;fill-rule:nonzero;stroke-width:0.125"
+   id="path5" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g7">
+        <path
+   d="m 61.034125,64.087 2.96725,1.71075 V 62.7715 Z"
+   style="fill:#393939;fill-rule:nonzero;stroke-width:0.125"
+   id="path6" />
+    </g>
+</svg>

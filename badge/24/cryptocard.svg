@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(4,0,0,4,-500,-500)"
+   id="g2">
+        <rect
+   x="125"
+   y="125"
+   width="6"
+   height="6"
+   style="fill:#1ba34a;stroke-width:0.0234375"
+   id="rect1" />
+        <g
+   transform="matrix(0.145063,0,0,0.145063,47,53.6207)"
+   id="g1">
+            <path
+   d="m 545.29429,512.73468 5.82853,-12.01406 h 16.7114 l -1.86914,3.59391 -12.38437,2.3e-4 -4.27125,8.42062 v 0.005 l 4.27125,8.42086 h 12.38437 l 1.86914,3.59414 h -16.7114 l -5.82853,-12.01407 h -0.003 l 0.002,-0.003 -0.002,-0.003 z m 26.169,0.002 -5.4975,-8.42157 -2.15438,4.21243 h -7.11656 l -2.16406,4.20867 h -0.002 l 9.1e-4,0.002 -9.1e-4,0.002 h 0.002 l 2.16406,4.20891 h 7.11656 l 2.15438,4.21219 5.4975,-8.42133 h 0.002 l -9.4e-4,-10e-4 9.4e-4,-10e-4 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.0234375"
+   id="path1" />
+        </g>
+    </g>
+</svg>

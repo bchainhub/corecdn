@@ -1,1 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="none"><path fill="#343434" d="m128.085 0-1.761 5.834v169.269l1.761 1.713 80.555-46.444L128.085 0Z"/><path fill="#8C8C8C" d="M128.007 0 47.449 130.372l80.558 46.444V0Z"/><path fill="#3C3C3B" d="m128.004 191.69-.992 1.18v60.296l.992 2.826 80.605-110.722-80.605 46.42Z"/><path fill="#8C8C8C" d="M128.007 255.992V191.69l-80.558-46.42 80.558 110.722Z"/><path fill="#141414" d="m128.02 176.809 80.555-46.444L128.02 94.65v82.159Z"/><path fill="#393939" d="m47.45 130.365 80.557 46.444V94.65l-80.558 35.715Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="501.29813"
+   height="796.12579"
+   viewBox="0 0 501.29813 796.12579"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg6"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs6" />
+    <g
+   transform="matrix(4.00013,0,0,4.00013,-261.54557,-113.93773)"
+   id="g6">
+        <path
+   d="m 128.07599,28.483507 -1.36912,4.535735 V 164.62007 l 1.36912,1.3318 62.62874,-36.10861 z"
+   style="fill:#343434;fill-rule:nonzero;stroke-width:0.777466"
+   id="path1" />
+        <path
+   d="M 128.01535,28.483507 65.384268,129.84326 128.01535,165.95187 Z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:0.777466"
+   id="path2" />
+        <path
+   d="m 128.01301,177.5159 -0.77124,0.91741 v 46.87806 l 0.77124,2.19712 62.66762,-86.08255 z"
+   style="fill:#3c3c3b;fill-rule:nonzero;stroke-width:0.777466"
+   id="path3" />
+        <path
+   d="M 128.01535,227.50849 V 177.5159 L 65.384268,141.42594 Z"
+   style="fill:#8c8c8c;fill-rule:nonzero;stroke-width:0.777466"
+   id="path4" />
+        <path
+   d="M 128.02545,165.94643 190.6542,129.83782 128.02545,102.07063 Z"
+   style="fill:#141414;fill-rule:nonzero;stroke-width:0.777466"
+   id="path5" />
+        <path
+   d="m 65.385045,129.83782 62.630305,36.10861 v -63.8758 l -62.631082,27.76719 z"
+   style="fill:#393939;fill-rule:nonzero;stroke-width:0.777466"
+   id="path6" />
+    </g>
+</svg>
