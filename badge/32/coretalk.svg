@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg6"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs6" />
+    <g
+   transform="matrix(4,0,0,4,-496,-496)"
+   id="g6">
+        <rect
+   x="124"
+   y="124"
+   width="8"
+   height="8"
+   style="fill:#009e21;stroke-width:0.03125"
+   id="rect1" />
+        <g
+   id="g5">
+            <clipPath
+   id="_clip1">
+                <rect
+   x="36"
+   y="43"
+   width="184"
+   height="169"
+   id="rect2" />
+            </clipPath>
+            <g
+   clip-path="url(#_clip1)"
+   id="g4">
+                <g
+   id="g3">
+                    <path
+   d="m 129.31672,125.36938 1.55815,2.63068 -1.55815,2.63069 -1.58138,-2.63069 z"
+   style="fill:#97ef97;fill-rule:nonzero;stroke-width:0.03125"
+   id="path2" />
+                    <path
+   d="m 127.73541,128.00003 1.58134,2.63072 h -2.63944 l -1.55228,-2.63072 1.55228,-2.63072 h 2.63944 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.03125"
+   id="path3" />
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

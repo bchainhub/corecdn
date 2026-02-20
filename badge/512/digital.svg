@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(8,0,0,8,-256,-256)"
+   id="g1">
+        <rect
+   x="32"
+   y="32"
+   width="64"
+   height="64"
+   style="fill:#c82020;stroke-width:0.5"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-256,-256)"
+   id="g2">
+        <path
+   d="m 85.914,64 c 0.004,2.977 -0.779,5.903 -2.2695,8.48 -1.4915,2.5775 -3.633,4.7195 -6.2105,6.211 -0.09,0.05 -0.177,0.1 -0.2665,0.15 -2.512,1.394 -5.3385,2.124 -8.2115,2.12 H 51.9975 l 3.1795,-8.4805 h -9.54 L 48.8155,64 h 20.14 l -3.1795,8.48 h 3.1795 c 3.9515,0 7.27,-2.7015 8.2115,-6.3605 0.1775,-0.6925 0.267,-1.405 0.2665,-2.12 0,-4.6815 -3.7965,-8.48 -8.4805,-8.48 H 51.995 l 3.179,-8.48 h 13.7795 c 2.977,-0.004 5.9025,0.779 8.48,2.269 2.578,1.4915 4.72,3.6335 6.2115,6.2115 1.4905,2.577 2.2735,5.503 2.2695,8.48 z m -37.1025,0 h -9.538 l 3.179,-8.48 h 9.54 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.5"
+   id="path1" />
+    </g>
+</svg>

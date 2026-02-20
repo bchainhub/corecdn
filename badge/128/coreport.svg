@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg3"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs3" />
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g1">
+        <rect
+   x="56"
+   y="56"
+   width="16"
+   height="16"
+   style="fill:#3551f2;stroke-width:0.125"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g2">
+        <path
+   d="m 64.785875,61.876 -0.902625,2.123875 h -2.122375 c -0.5805,0 -1.05825,0.47775 -1.05825,1.05825 v 0.0075 c 0,0.5805 0.47775,1.05825 1.05825,1.05825 H 62.9805 L 62.0625,68.25 c 0,0 -0.19175,-0.0021 -0.298,-0.0021 -1.7575,0 -3.185875,-1.428375 -3.185875,-3.186 0,-1.7575 1.428375,-3.185875 3.185875,-3.185875 h 3.02675 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.125"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(8,0,0,8,-448,-448)"
+   id="g3">
+        <path
+   d="m 69.43775,62.938 c 0,1.7575 -1.42825,3.186 -3.185875,3.186 H 62.981 L 63.883625,64 h 2.36825 c 0.584125,0 1.062,-0.477875 1.062,-1.062 0,-0.584125 -0.477875,-1.062 -1.062,-1.062 H 64.78625 L 65.6875,59.75 c 0.25,0.0019 0.3625,0.0021 0.56425,0.0021 1.7575,0 3.185875,1.428375 3.185875,3.185875 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.125"
+   id="path2" />
+    </g>
+</svg>

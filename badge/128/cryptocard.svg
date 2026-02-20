@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="matrix(4,0,0,4,-448,-448)"
+   id="g2">
+        <rect
+   x="112"
+   y="112"
+   width="32"
+   height="32"
+   style="fill:#1ba34a;stroke-width:0.125"
+   id="rect1" />
+        <g
+   transform="matrix(0.145063,0,0,0.145063,47,53.6207)"
+   id="g1">
+            <path
+   d="m 488.59782,512.72067 31.0855,-64.075 h 89.1275 l -9.96875,19.1675 -66.05,10e-4 -22.78,44.91 v 0.0263 l 22.78,44.91125 h 66.05 l 9.96875,19.16875 h -89.1275 l -31.0855,-64.075 h -0.017 l 0.008,-0.0175 -0.008,-0.0175 z m 139.568,0.01 -29.32,-44.915 -11.49,22.46625 h -37.955 l -11.54162,22.44625 h -0.01 l 0.005,0.009 -0.005,0.009 h 0.01 l 11.54162,22.4475 h 37.955 l 11.49,22.465 29.32,-44.91375 h 0.01 l -0.005,-0.008 0.005,-0.007 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.125"
+   id="path1" />
+        </g>
+    </g>
+</svg>

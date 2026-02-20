@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1024"
+   height="1024"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" />
+    <g
+   transform="scale(8)"
+   id="g1">
+        <rect
+   x="0"
+   y="0"
+   width="128"
+   height="128"
+   style="fill:#26a17b"
+   id="rect1" />
+    </g>
+    <g
+   transform="scale(8)"
+   id="g2">
+        <path
+   d="m 70.82,69.9 v -0.01 c -0.442,0.03 -2.726,0.164 -7.809,0.164 -4.064,0 -6.914,-0.113 -7.923,-0.165 v 0.01 C 39.458,69.21 27.801,66.494 27.801,63.232 c 0,-3.251 11.668,-5.978 27.287,-6.667 v 10.629 c 1.019,0.072 3.951,0.246 7.995,0.246 4.857,0 7.285,-0.205 7.738,-0.246 v -10.62 c 15.598,0.7 27.225,3.417 27.225,6.668 0,3.252 -11.637,5.968 -27.225,6.668 m 0,-14.436 V 45.967 H 92.583 V 31.469 H 33.337 v 14.498 h 21.761 v 9.507 c -17.687,0.813 -30.98,4.311 -30.98,8.51 0,4.197 13.303,7.696 30.98,8.519 V 102.98 H 70.831 V 72.503 c 17.657,-0.813 30.93,-4.311 30.93,-8.51 0,-4.187 -13.273,-7.696 -30.93,-8.509"
+   style="fill:#ffffff;fill-rule:nonzero"
+   id="path1" />
+    </g>
+</svg>

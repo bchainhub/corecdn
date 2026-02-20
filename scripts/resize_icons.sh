@@ -6,7 +6,6 @@ set -euo pipefail
 # ==============================
 SIZES=(16 24 32 48 64 72 96 128 144 192 256 512 1024)
 
-# Parallelism (override: JOBS=8 ./resize_icons.sh)
 DEFAULT_JOBS="$(
 	getconf _NPROCESSORS_ONLN 2>/dev/null \
 	|| sysctl -n hw.ncpu 2>/dev/null \
@@ -14,7 +13,6 @@ DEFAULT_JOBS="$(
 )"
 JOBS="${JOBS:-$DEFAULT_JOBS}"
 
-# Repo root = parent of this script's directory
 SCRIPT_DIR="$(
 	cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1
 	pwd
@@ -46,6 +44,16 @@ echo "Parallel jobs: $JOBS"
 echo
 
 # ==============================
+# QUIET WRAPPER (filters macOS GTK/CMS noise)
+# ==============================
+inkscape_quiet() {
+	"$@" 2> >(
+		grep -vE '^(CMSSystem::load_profiles:|/Library/ColorSync/Profiles/Displays/|\(org\.inkscape\.Inkscape:.*\): Gtk-(CRITICAL|WARNING))' \
+		1>&2
+	)
+}
+
+# ==============================
 # CONCURRENCY (bash 3.2 safe)
 # ==============================
 pids=()
@@ -69,9 +77,9 @@ wait_all() {
 # ==============================
 get_selection_width_1x() {
 	local svg="$1"
-	"$INKSCAPE_BIN" "$svg" \
+	inkscape_quiet "$INKSCAPE_BIN" "$svg" \
 		--actions="select-all;query-width" \
-		--batch-process 2>/dev/null | tail -n 1
+		--batch-process | tail -n 1
 }
 
 export_resized_svg_1x() {
@@ -79,7 +87,7 @@ export_resized_svg_1x() {
 	local scale="$2"
 	local out_svg="$3"
 
-	"$INKSCAPE_BIN" "$svg" \
+	inkscape_quiet "$INKSCAPE_BIN" "$svg" \
 		--actions="select-all;transform-scale:${scale};page-fit-to-selection;export-type:svg;export-plain-svg;export-filename:${out_svg};export-overwrite;export-do" \
 		--batch-process >/dev/null
 }
@@ -89,7 +97,7 @@ export_png_1x() {
 	local size="$2"
 	local out_png="$3"
 
-	"$INKSCAPE_BIN" "$svg" \
+	inkscape_quiet "$INKSCAPE_BIN" "$svg" \
 		--export-type=png \
 		--export-area-drawing \
 		--export-width="$size" \
@@ -105,7 +113,7 @@ export_png_092() {
 	local size="$2"
 	local out_png="$3"
 
-	"$INKSCAPE_BIN" -z -f "$svg" \
+	inkscape_quiet "$INKSCAPE_BIN" -z -f "$svg" \
 		--export-area-drawing \
 		--export-png="$out_png" \
 		--export-width="$size" \

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs1" />
+    <g
+   transform="matrix(4,0,0,4,-593.01,-398.986)"
+   id="g1">
+        <path
+   d="m 152.25201,107.7465 c -2.20546,0 -3.99951,-1.79398 -3.99951,-3.99951 0,-2.20545 1.79405,-4.00049 3.99951,-4.00049 2.20552,0 4.00049,1.79405 4.00049,4.00049 0,2.20651 -1.79497,3.99951 -4.00049,3.99951 z m 0,-6.43672 c -1.34333,0 -2.43623,1.0929 -2.43623,2.43623 0,1.34332 1.0929,2.43629 2.43623,2.43629 1.34332,0 2.43622,-1.09297 2.43622,-2.43629 0,-1.34333 -1.0929,-2.43623 -2.43622,-2.43623 z"
+   style="fill:#282828;fill-rule:nonzero;stroke-width:0.0659723"
+   id="path1" />
+    </g>
+</svg>

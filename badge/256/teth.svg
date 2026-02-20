@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs5" />
+    <g
+   transform="matrix(4,0,0,4,-384,-384)"
+   id="g1">
+        <rect
+   x="96"
+   y="96"
+   width="64"
+   height="64"
+   style="fill:#ef4800;stroke-width:0.25"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-384,-384)"
+   id="g2">
+        <path
+   d="M 128.01725,109.14075 127.75775,110 v 24.93925 l 0.2595,0.2525 11.86875,-6.843 -11.86875,-19.20825 z"
+   style="fill:#2c0000;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.25"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-384,-384)"
+   id="g3">
+        <path
+   d="m 128.00575,109.14075 -11.869,19.20825 11.869,6.843 z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.25"
+   id="path2" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-384,-384)"
+   id="g4">
+        <path
+   d="m 128.0055,137.38325 -0.146,0.174 v 8.88375 l 0.146,0.41625 11.876,-16.31325 z"
+   style="fill:#2c0000;fill-opacity:0.7;fill-rule:nonzero;stroke-width:0.25"
+   id="path3" />
+    </g>
+    <g
+   transform="matrix(4,0,0,4,-384,-384)"
+   id="g5">
+        <path
+   d="m 128.00575,146.85725 v -9.474 l -11.869,-6.83925 z m -11.869,-18.50925 11.869,6.84275 V 123.086 Z"
+   style="fill:#2c0000;fill-rule:nonzero;stroke-width:0.25"
+   id="path4" />
+    </g>
+</svg>

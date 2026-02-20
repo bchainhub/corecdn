@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="192"
+   height="192"
+   viewBox="0 0 192 192"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg8"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs8" />
+    <g
+   transform="matrix(4,0,0,4,-416,-416)"
+   id="g1">
+        <rect
+   x="104"
+   y="104"
+   width="48"
+   height="48"
+   style="fill:#77bb65;stroke-width:0.1875"
+   id="rect1" />
+    </g>
+    <g
+   transform="matrix(9.375,0,0,9.375,96,96)"
+   id="g8">
+        <g
+   transform="translate(-32,-32)"
+   id="g7">
+            <clipPath
+   id="_clip1">
+                <rect
+   x="0"
+   y="0"
+   width="64"
+   height="64"
+   id="rect2" />
+            </clipPath>
+            <g
+   clip-path="url(#_clip1)"
+   id="g6">
+                <g
+   transform="matrix(0.632461,0,0,0.632461,-188.632,0.376939)"
+   id="g5">
+                    <g
+   id="g4">
+                        <g
+   id="g3">
+                            <g
+   id="g2">
+                                <path
+   d="m 341.60053,55.625014 h 0.009 l -1.54744,3.75 h 3.75 l 1.54744,-3.75 h -0.009 l 1.54744,-3.75 h -3.75 z m 16.69744,-9.375 c 0,3.103125 -2.52188,5.625 -5.625,5.625 h -5.775 l 1.59375,-3.75 h 4.18125 c 1.03125,0 1.875,-0.84375 1.875,-1.875 0,-1.03125 -0.84375,-1.875 -1.875,-1.875 h -2.5875 l 1.55625,-3.75 h 1.03125 c 3.10312,0 5.625,2.521875 5.625,5.625 z m -13.64063,1.875 h -3.75 l -1.54743,3.75 h 3.75 z m 2.64882,-7.5 h -3.75 l -1.54744,3.75 h 3.75 z"
+   style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.1875"
+   id="path2" />
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
