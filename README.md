@@ -13,21 +13,48 @@ This repository serves as a CDN (Content Delivery Network) for storing and deplo
 > Modify the example link as needed
 
 ```url
-https://corecdn.info/mark/256/corecoin.png
+https://corecdn.info/mark/256/xcb.png
 ```
 
 ## Folder Structure and Path
 
-The folder structure is as follows:
+Source assets are **SVG files** in the `base` folder. A script generates multiple sizes in both SVG and PNG from these sources.
 
 ```txt
-[badge/mark]/[resolution]/{name}.[png/svg]
+[badge|mark]/base/{name}.svg         ← source (SVG only)
+[badge|mark]/[size]/{name}.svg       ← generated
+[badge|mark]/[size]/{name}.png       ← generated
 ```
 
-- **badge/mark**: This directory contains the badge or mark images.
-- **resolution**: This directory stores images of different resolutions. The resolution can be one of the following values: 16, 32, 48, 64, 128, or 256.
-- **{name}**: Replace this placeholder with the actual filename.
-- **png/svg**: Choose either the PNG or SVG file format based on your needs.
+- **badge/mark**: Top-level directory for badge or mark images.
+- **base**: Contains the source SVG files. Only SVGs live here; PNGs are generated.
+- **size**: Generated output folders named by pixel size (see list below).
+- **{name}**: The filename without extension.
+
+### Generated sizes
+
+The script produces icons at these pixel sizes (in both SVG and PNG):
+
+**16**, **24**, **32**, **48**, **64**, **72**, **96**, **128**, **144**, **192**, **256**, **512**, **1024**
+
+## Build script
+
+The script `scripts/resize_icons.sh` generates all size variants from the base SVGs:
+
+1. Finds every SVG under `badge/base/` and `mark/base/`.
+2. For each base SVG, creates a folder per size (e.g. `mark/256/`) and:
+   - Copies the SVG into that folder.
+   - Exports a PNG at that pixel size using Inkscape.
+
+**Requirements:** [Inkscape](https://inkscape.org/) must be installed and on your `PATH`.
+
+**Run from the repo root:**
+
+```bash
+./scripts/resize_icons.sh
+```
+
+After running, commit the updated `badge/<size>/` and `mark/<size>/` folders as needed.
 
 ## CDN URLs
 
