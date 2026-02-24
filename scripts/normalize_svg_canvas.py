@@ -8,10 +8,9 @@ is correct (Inkscape may leave a non-square viewBox). Uses content bbox for scal
 
 Usage: normalize_svg_canvas.py <svg_path> <size>
 """
-import os
+import io
 import re
 import sys
-import tempfile
 import xml.etree.ElementTree as ET
 
 SVG_NS = "http://www.w3.org/2000/svg"
@@ -31,6 +30,9 @@ def _t(x, y, scale, dx, dy):
     return (round(scale * (x + dx), 3), round(scale * (y + dy), 3))
 
 
+# Max iterations in path parsing to avoid hangs on malformed or huge path data
+_PATH_PARSE_MAX_ITER = 2_000_000
+
 def _path_d_bbox(d):
     """Return (min_x, min_y, max_x, max_y) from path d, or None if empty/invalid."""
     if not d or not d.strip():
@@ -43,6 +45,7 @@ def _path_d_bbox(d):
     i = 0
     current_x = current_y = 0.0
     start_x = start_y = 0.0
+    iterations = 0
 
     def consume(n):
         nonlocal i
@@ -59,6 +62,9 @@ def _path_d_bbox(d):
             max_y = max(max_y, y)
 
     while i < len(tokens):
+        iterations += 1
+        if iterations > _PATH_PARSE_MAX_ITER:
+            return None
         t = tokens[i]
         if t not in _PATH_PARAMS:
             i += 1
@@ -154,6 +160,147 @@ def _path_d_bbox(d):
     return (min_x, min_y, max_x, max_y)
 
 
+def path_d_analyze(d):
+    """
+    Parse path 'd' and return (bbox, None) on success or (None, reason) on failure.
+    Used by --analyze to report what is malformed. Reasons:
+      - "empty": d is empty or whitespace
+      - "no_tokens": no path commands/numbers found
+      - "iteration_limit": path has too many segments (> _PATH_PARSE_MAX_ITER)
+      - "not_enough_params": a command has fewer numbers than required (e.g. M with one number)
+      - "invalid_number": a token could not be parsed as float
+    """
+    if not d or not d.strip():
+        return (None, "empty")
+    tokens = re.findall(r"[MLHVCSQTAZmlhvcsqtaz]|[-+]?(?:\d*\.?\d+(?:[eE][-+]?\d+)?)", d)
+    if not tokens:
+        return (None, "no_tokens")
+    min_x = min_y = float("inf")
+    max_x = max_y = float("-inf")
+    i = 0
+    current_x = current_y = 0.0
+    start_x = start_y = 0.0
+    iterations = 0
+
+    def consume(n):
+        nonlocal i
+        if i + n > len(tokens):
+            raise IndexError("not enough params")
+        vals = [float(tokens[i + k]) for k in range(n)]
+        i += n
+        return vals
+
+    def update(*pts):
+        nonlocal min_x, min_y, max_x, max_y
+        for (x, y) in pts:
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x)
+            max_y = max(max_y, y)
+
+    try:
+        while i < len(tokens):
+            iterations += 1
+            if iterations > _PATH_PARSE_MAX_ITER:
+                return (None, "iteration_limit")
+            t = tokens[i]
+            if t not in _PATH_PARAMS:
+                i += 1
+                continue
+            cmd = t
+            i += 1
+            n = _PATH_PARAMS[cmd]
+            if n == 0:
+                update((start_x, start_y))
+                continue
+            first = True
+            while i + n <= len(tokens) and (
+                first or (tokens[i] not in _PATH_PARAMS or tokens[i] in "Mm")
+            ):
+                if tokens[i] in _PATH_PARAMS and tokens[i] not in "Mm" and not first:
+                    break
+                first = False
+                if cmd in "Mm" and not first:
+                    cmd = "L" if cmd == "M" else "l"
+                    n = 2
+                if cmd in "ML":
+                    x, y = consume(2)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd in "ml":
+                    x, y = consume(2)
+                    current_x, current_y = current_x + x, current_y + y
+                    update((current_x, current_y))
+                elif cmd == "H":
+                    x = consume(1)[0]
+                    current_x = x
+                    update((x, current_y))
+                elif cmd == "h":
+                    current_x += consume(1)[0]
+                    update((current_x, current_y))
+                elif cmd == "V":
+                    y = consume(1)[0]
+                    current_y = y
+                    update((current_x, y))
+                elif cmd == "v":
+                    current_y += consume(1)[0]
+                    update((current_x, current_y))
+                elif cmd == "C":
+                    x1, y1, x2, y2, x, y = consume(6)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "c":
+                    dx1, dy1, dx2, dy2, dx_val, dy_val = consume(6)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "S":
+                    x2, y2, x, y = consume(4)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "s":
+                    dx2, dy2, dx_val, dy_val = consume(4)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "Q":
+                    x1, y1, x, y = consume(4)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "q":
+                    dx1, dy1, dx_val, dy_val = consume(4)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "T":
+                    x, y = consume(2)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "t":
+                    dx_val, dy_val = consume(2)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "A":
+                    rx, ry, rot, la, sweep, x, y = consume(7)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "a":
+                    rx, ry, rot, la, sweep, dx_val, dy_val = consume(7)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                if cmd in "Mm":
+                    start_x, start_y = current_x, current_y
+        if min_x == float("inf"):
+            return (None, "no_geometry")
+        return ((min_x, min_y, max_x, max_y), None)
+    except IndexError:
+        return (None, "not_enough_params")
+    except ValueError:
+        return (None, "invalid_number")
+
+
 def _element_bbox(el):
     """Bounding box for one element; return (min_x, min_y, max_x, max_y) or None."""
     raw = el.tag if isinstance(el.tag, str) else ""
@@ -230,6 +377,7 @@ def _transform_path_d(d, scale, dx, dy):
     current_x = current_y = 0.0
     start_x = start_y = 0.0
     last_cmd = None
+    iterations = 0
 
     def consume(n):
         nonlocal i
@@ -238,6 +386,9 @@ def _transform_path_d(d, scale, dx, dy):
         return vals
 
     while i < len(tokens):
+        iterations += 1
+        if iterations > _PATH_PARSE_MAX_ITER:
+            return d
         t = tokens[i]
         if t in _PATH_PARAMS:
             cmd = t
@@ -499,38 +650,29 @@ def main():
     root.set("width", str(size))
     root.set("height", str(size))
 
-    # Write to a temp file then replace
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as out:
-        tmp = out.name
-    try:
-        with open(tmp, "w", encoding="utf-8") as out:
-            tree.write(
-                out,
-                encoding="unicode",
-                method="xml",
-                xml_declaration=True,
-            )
-        with open(tmp, "r", encoding="utf-8") as f:
-            content = f.read()
-        # Ensure root has xmlns and strip ns0: prefix from tags (ET writes namespaced tags)
-        if 'xmlns="' not in content and 'xmlns=' not in content:
-            content = content.replace("<svg ", '<svg xmlns="%s" ' % SVG_NS, 1)
-        content = content.replace("<ns0:svg ", '<svg xmlns="%s" ' % SVG_NS, 1)
-        content = content.replace("</ns0:svg>", "</svg>")
-        content = content.replace(' xmlns:ns0="%s"' % SVG_NS, "")
-        content = content.replace("ns0:", "")  # <ns0:g> -> <g>, etc.
-        # Force viewBox and width/height on root so the original is never kept
-        new_viewbox = 'viewBox="0 0 %s %s"' % (size, size)
-        content = re.sub(r'\bviewBox="[^"]*"', new_viewbox, content, count=1)
-        content = re.sub(r'\bwidth="[^"]*"', 'width="%s"' % size, content, count=1)
-        content = re.sub(r'\bheight="[^"]*"', 'height="%s"' % size, content, count=1)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(content)
-    finally:
-        try:
-            os.unlink(tmp)
-        except OSError:
-            pass
+    # Write tree to memory (no temp file), apply regex fixes, write to path
+    buf = io.StringIO()
+    tree.write(
+        buf,
+        encoding="unicode",
+        method="xml",
+        xml_declaration=True,
+    )
+    content = buf.getvalue()
+    # Ensure root has xmlns and strip ns0: prefix from tags (ET writes namespaced tags)
+    if 'xmlns="' not in content and 'xmlns=' not in content:
+        content = content.replace("<svg ", '<svg xmlns="%s" ' % SVG_NS, 1)
+    content = content.replace("<ns0:svg ", '<svg xmlns="%s" ' % SVG_NS, 1)
+    content = content.replace("</ns0:svg>", "</svg>")
+    content = content.replace(' xmlns:ns0="%s"' % SVG_NS, "")
+    content = content.replace("ns0:", "")  # <ns0:g> -> <g>, etc.
+    # Force viewBox and width/height on root so the original is never kept
+    new_viewbox = 'viewBox="0 0 %s %s"' % (size, size)
+    content = re.sub(r'\bviewBox="[^"]*"', new_viewbox, content, count=1)
+    content = re.sub(r'\bwidth="[^"]*"', 'width="%s"' % size, content, count=1)
+    content = re.sub(r'\bheight="[^"]*"', 'height="%s"' % size, content, count=1)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
 
 
 if __name__ == "__main__":

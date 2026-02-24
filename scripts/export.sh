@@ -9,6 +9,7 @@ VERBOSE=0
 MINIFY_SVG=1
 MINIFY_PNG=1
 NOADVERT=0
+ANALYZE=0
 
 for arg in "$@"; do
 	case "$arg" in
@@ -30,6 +31,10 @@ for arg in "$@"; do
 			;;
 		--noadvert)
 			NOADVERT=1
+			shift
+			;;
+		--analyze)
+			ANALYZE=1
 			shift
 			;;
 	esac
@@ -89,6 +94,22 @@ if [[ "$NOADVERT" -eq 1 ]]; then
 fi
 
 # ==============================
+# --analyze: CHECK BASE SVGs FOR CORRECTNESS, THEN EXIT
+# ==============================
+if [[ "$ANALYZE" -eq 1 ]]; then
+	PYTHON3_BIN="$(command -v python3 || true)"
+	if [[ -z "$PYTHON3_BIN" ]]; then
+		echo "Error: python3 not found (required for --analyze)."
+		exit 1
+	fi
+	echo "Analyzing base SVGs in mark/base and badge/base..."
+	echo "Repo root: $ROOT_DIR"
+	echo
+	"$PYTHON3_BIN" "${SCRIPT_DIR}/analyze_base_svg.py" "$ROOT_DIR"
+	exit "$?"
+fi
+
+# ==============================
 # INKSCAPE
 # ==============================
 INKSCAPE_BIN="$(command -v inkscape || true)"
@@ -142,13 +163,32 @@ minify_png() {
 }
 
 # ==============================
-# QUIET / VERBOSE MODE
+# QUIET / VERBOSE MODE + TIMEOUT
 # ==============================
+# In verbose mode Inkscape stderr is shown (no filter) so you can see why it might hang.
+# Optional: timeout so a stuck Inkscape doesn't freeze (timeout/gtimeout from coreutils).
+INKSCAPE_TIMEOUT_BIN=""
+for cmd in timeout gtimeout; do
+	if command -v "$cmd" &>/dev/null; then
+		INKSCAPE_TIMEOUT_BIN="$cmd"
+		break
+	fi
+done
+INKSCAPE_TIMEOUT_SEC=300
 inkscape_run() {
 	if [[ "$VERBOSE" -eq 1 ]]; then
-		"$INKSCAPE_BIN" "$@"
+		# Verbose: show full Inkscape stderr (Gtk/CMSSystem etc.) to debug freezes
+		if [[ -n "$INKSCAPE_TIMEOUT_BIN" ]]; then
+			"$INKSCAPE_TIMEOUT_BIN" "$INKSCAPE_TIMEOUT_SEC" "$INKSCAPE_BIN" "$@"
+		else
+			"$INKSCAPE_BIN" "$@"
+		fi
 	else
-		script -q /dev/null "$INKSCAPE_BIN" "$@" >/dev/null 2>&1
+		if [[ -n "$INKSCAPE_TIMEOUT_BIN" ]]; then
+			script -q /dev/null "$INKSCAPE_TIMEOUT_BIN" "$INKSCAPE_TIMEOUT_SEC" "$INKSCAPE_BIN" "$@" >/dev/null 2>&1
+		else
+			script -q /dev/null "$INKSCAPE_BIN" "$@" >/dev/null 2>&1
+		fi
 	fi
 }
 
@@ -158,12 +198,13 @@ log() {
 	fi
 }
 
-echo "Starting icon export..."
+echo "Starting icon export…"
 echo "Repo root: $ROOT_DIR"
 echo "Inkscape: ${INKSCAPE_VER:-unknown} ($([[ "$INKSCAPE_LEGACY_ACTIONS" -eq 1 ]] && echo 'legacy actions' || echo '1.3+ actions'))"
 echo "Overwrite mode: $OVERWRITE"
 echo "Verbose mode: $VERBOSE"
 echo "Parallel jobs: $JOBS"
+[[ "$VERBOSE" -eq 1 ]] && echo "Tip: if export hangs, try JOBS=1. To auto-kill stuck tasks (e.g. in normalize), install coreutils: brew install coreutils (provides gtimeout)."
 if [[ "$MINIFY_SVG" -eq 1 && -n "$SCOUR_BIN" ]]; then
 	echo "SVG minification: on (scour)"
 elif [[ "$MINIFY_SVG" -eq 0 ]]; then
@@ -253,12 +294,17 @@ export_square_svg() {
 # Inkscape export can leave a non-square viewBox (e.g. 166x256). This step forces
 # viewBox 0 0 size size and bakes scale/translate into path data so SVG and PNG are correct.
 PYTHON3_BIN="$(command -v python3 || true)"
+NORMALIZE_TIMEOUT_SEC=120
 normalize_svg_canvas() {
 	local svg_path="$1"
 	local size="$2"
 	[[ ! -f "$svg_path" ]] && return 1
 	[[ -z "$PYTHON3_BIN" ]] && return 1
-	"$PYTHON3_BIN" "${SCRIPT_DIR}/normalize_svg_canvas.py" "$svg_path" "$size" 2>/dev/null || true
+	if [[ -n "$INKSCAPE_TIMEOUT_BIN" ]]; then
+		"$INKSCAPE_TIMEOUT_BIN" "$NORMALIZE_TIMEOUT_SEC" "$PYTHON3_BIN" "${SCRIPT_DIR}/normalize_svg_canvas.py" "$svg_path" "$size" 2>/dev/null || true
+	else
+		"$PYTHON3_BIN" "${SCRIPT_DIR}/normalize_svg_canvas.py" "$svg_path" "$size" 2>/dev/null || true
+	fi
 }
 
 # ==============================
@@ -281,6 +327,7 @@ export_square_png() {
 # ==============================
 # PROCESS ONE SIZE
 # ==============================
+# Optional: run entire task under timeout so one stuck job (e.g. normalize) doesn't block forever.
 process_one_size() {
 	local svg="$1"
 	local size="$2"
@@ -293,10 +340,13 @@ process_one_size() {
 	fi
 
 	log "	→ ${size}px (exporting)"
-
+	log "	    [${size}px] Inkscape SVG..."
 	export_square_svg "$svg" "$size" "$out_svg"
+	log "	    [${size}px] Inkscape SVG done; normalize..."
 	normalize_svg_canvas "$out_svg" "$size"
+	log "	    [${size}px] normalize done; Inkscape PNG..."
 	export_square_png "$out_svg" "$size" "$out_png"
+	log "	    [${size}px] done."
 }
 
 # ==============================
@@ -320,8 +370,48 @@ if [[ ${#SVG_FILES[@]} -eq 0 ]]; then
 	exit 0
 fi
 
-echo "Found ${#SVG_FILES[@]} SVG file(s)"
+# Count valid base files (no <g> tag) for progress total
+VALID_BASE_COUNT=0
+for svg in "${SVG_FILES[@]}"; do
+	svg_has_g_tag "$svg" || ((VALID_BASE_COUNT++)) || true
+done
+TOTAL_TASKS=$((VALID_BASE_COUNT * ${#SIZES[@]}))
+
+echo "Found ${#SVG_FILES[@]} SVG file(s) ($VALID_BASE_COUNT to export), $TOTAL_TASKS tasks"
 echo
+
+# ==============================
+# PROGRESS REPORTER (runs in background until wait_all)
+# ==============================
+export EXPORT_PROGRESS_VERBOSE="$VERBOSE"
+export EXPORT_PROGRESS_TOTAL="$TOTAL_TASKS"
+export EXPORT_PROGRESS_ROOT="$ROOT_DIR"
+progress_reporter() {
+	local total="$EXPORT_PROGRESS_TOTAL"
+	local root="$EXPORT_PROGRESS_ROOT"
+	local verbose="$EXPORT_PROGRESS_VERBOSE"
+	local width=28
+	while true; do
+		sleep 1
+		[[ -z "$root" || "$total" -eq 0 ]] && continue
+		current=$(find "$root"/mark "$root"/badge -mindepth 2 -maxdepth 2 -name "*.png" 2>/dev/null | wc -l | tr -d ' ')
+		[[ -z "$current" ]] && current=0
+		if [[ "$verbose" -eq 1 ]]; then
+			printf "Export progress: %s/%s\n" "$current" "$total"
+		else
+			filled=$((width * current / total))
+			[[ "$filled" -gt "$width" ]] && filled=$width
+			empty=$((width - filled))
+			bar="[$(printf "%${filled}s" "" | tr ' ' '=')$(printf "%${empty}s" "" | tr ' ' '-')]"
+			printf "\r  Export %s %s/%s " "$bar" "$current" "$total"
+		fi
+	done
+}
+progress_reporter &
+PROGRESS_PID=$!
+# Ensure Ctrl+C and normal exit kill the progress reporter so it doesn't run forever
+trap 'kill "$PROGRESS_PID" 2>/dev/null; exit 130' INT TERM
+trap 'kill "$PROGRESS_PID" 2>/dev/null' EXIT
 
 # ==============================
 # MAIN LOOP
@@ -354,6 +444,8 @@ for svg in "${SVG_FILES[@]}"; do
 done
 
 wait_all
+kill "$PROGRESS_PID" 2>/dev/null || true
+[[ "$VERBOSE" -eq 0 ]] && printf "\n"
 
 # ==============================
 # SECOND PASS: MINIFY ALL GENERATED FILES
