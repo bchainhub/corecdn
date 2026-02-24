@@ -203,8 +203,10 @@ wait_all() {
 # ==============================
 # EXPORT SQUARE SVG (version-specific actions)
 # ==============================
-# Inkscape 1.3+ removed document-set-width/height and changed action parsing; use single-line + export-do.
-# Older Inkscape uses legacy multi-line actions with document-set-width/height.
+# Inkscape CAN do the full square resize when legacy actions exist (< 1.3):
+#   document-set-width and document-set-height set the page to the requested pixel size and keep content centered.
+# Inkscape 1.3+ removed those actions, so the export is only "fit to content" (non-square). We then use
+# a Python post-process to make the canvas square and set size so both SVG and PNG are correct.
 export_square_svg() {
 	local input_svg="$1"
 	local size="$2"
@@ -282,8 +284,8 @@ process_one_size() {
 	log "	→ ${size}px (exporting)"
 
 	export_square_svg "$svg" "$size" "$out_svg"
-	# Make canvas square and center content (fixes non-square / stretched output)
-	square_svg_canvas "$out_svg" "$size"
+	# Inkscape 1.3+ cannot set page size; make canvas square and set dimensions (no stretch, centered)
+	[[ "$INKSCAPE_LEGACY_ACTIONS" -eq 0 ]] && square_svg_canvas "$out_svg" "$size"
 	export_square_png "$out_svg" "$size" "$out_png"
 }
 
