@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <rect width="1024" height="1024" fill="#118C4F" />
     <path
    d="M 473.82239,830.00101 V 689.00543 H 293.78254 V 628.70215 H 473.82239 V 566.66508 H 293.78254 V 502.45615 H 441.71946 L 265.58219,194.00151 h 86.76675 l 125.8141,223.85667 c 14.16959,25.45158 25.16158,47.72248 32.96982,66.80963 6.65135,-15.32648 18.51024,-38.89927 35.5736,-70.71221 L 665.57922,194.00151 h 92.83811 L 582.71504,502.45615 h 147.93693 v 64.20893 H 551.914 v 62.03707 h 178.73797 v 60.30328 H 551.914 v 140.99558 z"
