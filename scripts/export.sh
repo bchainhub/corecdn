@@ -202,51 +202,59 @@ wait_all() {
 }
 
 # ==============================
-# EXPORT SQUARE SVG (version-specific actions)
+# EXPORT SQUARE SVG (Inkscape does resizing)
 # ==============================
-# Inkscape CAN do the full square resize when legacy actions exist (< 1.3):
-#   document-set-width and document-set-height set the page to the requested pixel size and keep content centered.
-# Inkscape 1.3+ removed those actions, so the export is only "fit to content" (non-square). We then use
-# a Python post-process to make the canvas square and set size so both SVG and PNG are correct.
+# Base SVGs use viewBox 0 0 1024 1024. We scale content by (size/1024), fit canvas to selection,
+# then export. This produces SVG and PNG at the requested pixel size without a Python post-process.
+# Scale factor: size/1024 (e.g. 256 -> 0.25)
 export_square_svg() {
 	local input_svg="$1"
 	local size="$2"
 	local output_svg="$3"
+	local scale
+	scale="$(awk "BEGIN { printf \"%.6f\", $size/1024 }")"
+	# Deep ungroup before export so no <g transform="..."> in output
+	local ungroup_actions="SelectionUnGroup;SelectionUnGroup;SelectionUnGroup;SelectionUnGroup;SelectionUnGroup"
 
 	if [[ "$INKSCAPE_LEGACY_ACTIONS" -eq 1 ]]; then
-		# Legacy (Inkscape < 1.3): document-set-width/height, multi-line actions
+		# Legacy (Inkscape < 1.3): scale selection, fit canvas, set document size, export
 		inkscape_run "$input_svg" \
 			--batch-process \
 			--actions="
 				select-all;
 				object-to-path;
 				page-fit-to-selection;
+				select-all;
+				transform-scale:$scale;
+				select-all;
+				page-fit-to-selection;
 				document-set-width:$size;
 				document-set-height:$size;
 				select-all;
+				$ungroup_actions;
 				export-plain-svg;
 				export-filename:$output_svg;
 			"
 	else
-		# Inkscape 1.3+: no document-set-* (removed), single-line, explicit export-do
+		# Inkscape 1.3+: scale selection, fit canvas to scaled content (no document-set-*), export
 		inkscape_run "$input_svg" \
 			--batch-process \
-			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;export-plain-svg;export-filename:$output_svg;export-do"
+			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;transform-scale:$scale;select-all:all;page-fit-to-selection;select-all:all;$ungroup_actions;export-plain-svg;export-filename:$output_svg;export-do"
 	fi
 }
 
 # ==============================
-# SQUARE CANVAS POST-PROCESS (center content, no stretch)
+# NORMALIZE SVG CANVAS (square viewBox, centered content; no wrapper <g>)
 # ==============================
-# Inkscape 1.3+ does not set document size; exported SVG may be non-square.
-# This step makes the canvas square and centers the content so PNG export is not deformed.
+# Inkscape export can leave a non-square viewBox (e.g. 166x256). This step forces
+# viewBox 0 0 size size and bakes scale/translate into path data so SVG and PNG are correct.
 PYTHON3_BIN="$(command -v python3 || true)"
-square_svg_canvas() {
+normalize_svg_canvas() {
 	local svg_path="$1"
 	local size="$2"
 	[[ ! -f "$svg_path" ]] && return 1
 	[[ -z "$PYTHON3_BIN" ]] && return 1
-	"$PYTHON3_BIN" "${SCRIPT_DIR}/square_svg.py" "$svg_path" "$size" 2>/dev/null || true
+	"$PYTHON3_BIN" "${SCRIPT_DIR}/normalize_svg_canvas.py" "$svg_path" "$size" 2>/dev/null || true
 }
 
 # ==============================
@@ -283,8 +291,7 @@ process_one_size() {
 	log "	→ ${size}px (exporting)"
 
 	export_square_svg "$svg" "$size" "$out_svg"
-	# Inkscape 1.3+ cannot set page size; make canvas square and set dimensions (no stretch, centered)
-	[[ "$INKSCAPE_LEGACY_ACTIONS" -eq 0 ]] && square_svg_canvas "$out_svg" "$size"
+	normalize_svg_canvas "$out_svg" "$size"
 	export_square_png "$out_svg" "$size" "$out_png"
 }
 
