@@ -216,8 +216,10 @@ export_square_svg() {
 	# Deep ungroup before export so no <g transform="..."> in output
 	local ungroup_actions="SelectionUnGroup;SelectionUnGroup;SelectionUnGroup;SelectionUnGroup;SelectionUnGroup"
 
+	# Center selection on page as a whole (multiple paths = one unit); group = treat selection as single bbox
+	local align_center="object-align:page,hcenter,vcenter,group"
 	if [[ "$INKSCAPE_LEGACY_ACTIONS" -eq 1 ]]; then
-		# Legacy (Inkscape < 1.3): scale selection, fit canvas, set document size, export
+		# Legacy (Inkscape < 1.3): scale, fit, set document to size×size, center on page, export
 		inkscape_run "$input_svg" \
 			--batch-process \
 			--actions="
@@ -231,15 +233,17 @@ export_square_svg() {
 				document-set-width:$size;
 				document-set-height:$size;
 				select-all;
+				$align_center;
+				select-all;
 				$ungroup_actions;
 				export-plain-svg;
 				export-filename:$output_svg;
 			"
 	else
-		# Inkscape 1.3+: scale selection, fit canvas to scaled content (no document-set-*), export
+		# Inkscape 1.3+: scale, fit canvas; then center selection on page (page may be non-square), export
 		inkscape_run "$input_svg" \
 			--batch-process \
-			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;transform-scale:$scale;select-all:all;page-fit-to-selection;select-all:all;$ungroup_actions;export-plain-svg;export-filename:$output_svg;export-do"
+			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;transform-scale:$scale;select-all:all;page-fit-to-selection;select-all:all;$align_center;select-all:all;$ungroup_actions;export-plain-svg;export-filename:$output_svg;export-do"
 	fi
 }
 

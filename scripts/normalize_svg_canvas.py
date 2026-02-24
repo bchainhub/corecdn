@@ -66,7 +66,8 @@ def _path_d_bbox(d):
         cmd = t
         i += 1
         n = _PATH_PARAMS[cmd]
-        if n == 0:  # Z/z
+        if n == 0:  # Z/z - close path to start; include start point in bbox
+            update((start_x, start_y))
             continue
         first = True
         while i + n <= len(tokens) and (
@@ -155,7 +156,8 @@ def _path_d_bbox(d):
 
 def _element_bbox(el):
     """Bounding box for one element; return (min_x, min_y, max_x, max_y) or None."""
-    tag = el.tag if isinstance(el.tag, str) else (el.tag.split("}")[-1] if "}" in el.tag else "")
+    raw = el.tag if isinstance(el.tag, str) else ""
+    tag = raw.split("}")[-1] if "}" in raw else raw
     if tag == "path":
         return _path_d_bbox(el.get("d") or "")
     if tag == "circle":
@@ -253,7 +255,7 @@ def _transform_path_d(d, scale, dx, dy):
                 if tokens[i] in _PATH_PARAMS and tokens[i] not in "Mm" and not first:
                     break
                 first = False
-                if cmd in "Mm" and not first and last_cmd in "Mm":
+                if cmd in "Mm" and not first and (last_cmd is not None and last_cmd in "Mm"):
                     cmd = "L" if cmd == "M" else "l"
                     n = 2
                 if cmd in "ML":
@@ -358,7 +360,8 @@ def _transform_path_d(d, scale, dx, dy):
 
 def _apply_transform_to_element(el, scale, dx, dy):
     """Bake scale and translate into element coordinates. No wrapper <g>."""
-    tag = el.tag if isinstance(el.tag, str) else (el.tag.split("}")[-1] if "}" in el.tag else "")
+    raw = el.tag if isinstance(el.tag, str) else ""
+    tag = raw.split("}")[-1] if "}" in raw else raw
     if tag == "path":
         d = el.get("d")
         if d:
@@ -447,30 +450,34 @@ def main():
             return tag
         return "{%s}%s" % (SVG_NS, tag)
 
-    # Prefer content bbox (from path/element coords) so we scale correctly even when
-    # viewBox is already 0 0 size size (e.g. legacy Inkscape export).
+    # Bounds for centering: prefer content bbox when viewBox is square so the drawing is centered
+    # (Inkscape may export a square viewBox with content off-center, e.g. left-aligned).
+    # When viewBox is non-square (e.g. 0 0 166 256), use it so we center the canvas in a square.
+    view_box = root.get("viewBox")
+    view_box_rect = None
+    if view_box:
+        parts = view_box.strip().replace(",", " ").split()
+        if len(parts) >= 4:
+            view_box_rect = (float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3]))
+        else:
+            view_box = None
     content = _content_bbox(root)
-    if content is not None:
+    if view_box_rect is not None:
+        vbx, vby, vbw, vbh = view_box_rect
+        # Square viewBox: center using actual content bbox so the graphic is centered.
+        if abs(vbw - vbh) < 1e-6 and content is not None:
+            min_x, min_y, w, h = content
+        else:
+            min_x, min_y, w, h = vbx, vby, vbw, vbh
+    elif content is not None:
         min_x, min_y, w, h = content
     else:
-        view_box = root.get("viewBox")
-        if view_box:
-            parts = view_box.strip().replace(",", " ").split()
-            if len(parts) >= 4:
-                min_x = float(parts[0])
-                min_y = float(parts[1])
-                w = float(parts[2])
-                h = float(parts[3])
-            else:
-                sys.stderr.write("Invalid viewBox\n")
-                sys.exit(1)
-        else:
-            min_x = min_y = 0.0
-            w = float(root.get("width", 0).replace("px", "")) or 0
-            h = float(root.get("height", 0).replace("px", "")) or 0
-            if w <= 0 or h <= 0:
-                sys.stderr.write("Cannot determine SVG dimensions\n")
-                sys.exit(1)
+        min_x = min_y = 0.0
+        w = float(root.get("width", 0).replace("px", "")) or 0
+        h = float(root.get("height", 0).replace("px", "")) or 0
+        if w <= 0 or h <= 0:
+            sys.stderr.write("Cannot determine SVG dimensions\n")
+            sys.exit(1)
 
     side = max(w, h)
     if side <= 0:
