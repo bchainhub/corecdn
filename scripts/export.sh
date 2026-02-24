@@ -96,6 +96,18 @@ if [[ -z "$INKSCAPE_BIN" ]]; then
 	echo "Error: inkscape not found in PATH."
 	exit 1
 fi
+# Parse major.minor (e.g. 1.3 from "Inkscape 1.3.2 ...") for action compatibility
+INKSCAPE_VER="$("$INKSCAPE_BIN" --version 2>/dev/null | sed -n 's/.*[Ii]nkscape \([0-9]*\.[0-9]*\).*/\1/p' | head -1)"
+INKSCAPE_VER_MAJOR="${INKSCAPE_VER%%.*}"
+INKSCAPE_VER_MINOR="${INKSCAPE_VER#*.}"
+INKSCAPE_VER_MINOR="${INKSCAPE_VER_MINOR%%.*}"
+# 1.3+ uses different action names (document-set-width/height removed); 1.2 and older use legacy actions
+INKSCAPE_LEGACY_ACTIONS=0
+if [[ -n "$INKSCAPE_VER_MAJOR" && -n "$INKSCAPE_VER_MINOR" ]]; then
+	if [[ "$INKSCAPE_VER_MAJOR" -lt 1 ]] || [[ "$INKSCAPE_VER_MAJOR" -eq 1 && "$INKSCAPE_VER_MINOR" -lt 3 ]]; then
+		INKSCAPE_LEGACY_ACTIONS=1
+	fi
+fi
 
 # ==============================
 # SVG MINIFICATION
@@ -104,7 +116,8 @@ SCOUR_BIN="$(command -v scour || true)"
 minify_svg() {
 	local f="$1"
 	[[ "$MINIFY_SVG" -eq 0 || -z "$SCOUR_BIN" ]] && return 0
-	# Minify to temp file then replace (safe overwrite)
+	[[ ! -f "$f" ]] && return 0
+	# Minify to temp file then replace (safe overwrite). Safe to call on missing file (no-op).
 	"$SCOUR_BIN" -q \
 		-i "$f" \
 		-o "${f}.min" \
@@ -122,7 +135,8 @@ OXIPNG_BIN="$(command -v oxipng || true)"
 minify_png() {
 	local f="$1"
 	[[ "$MINIFY_PNG" -eq 0 || -z "$OXIPNG_BIN" ]] && return 0
-	# Lossless compress in place (oxipng overwrites by default)
+	[[ ! -f "$f" ]] && return 0
+	# Lossless compress in place (oxipng overwrites by default). Safe to call on missing file (no-op).
 	"$OXIPNG_BIN" -q -o 6 "$f" 2>/dev/null || true
 }
 
@@ -145,6 +159,7 @@ log() {
 
 echo "Starting icon export..."
 echo "Repo root: $ROOT_DIR"
+echo "Inkscape: ${INKSCAPE_VER:-unknown} ($([[ "$INKSCAPE_LEGACY_ACTIONS" -eq 1 ]] && echo 'legacy actions' || echo '1.3+ actions'))"
 echo "Overwrite mode: $OVERWRITE"
 echo "Verbose mode: $VERBOSE"
 echo "Parallel jobs: $JOBS"
@@ -186,27 +201,51 @@ wait_all() {
 }
 
 # ==============================
-# EXPORT SQUARE SVG
+# EXPORT SQUARE SVG (version-specific actions)
 # ==============================
+# Inkscape 1.3+ removed document-set-width/height and changed action parsing; use single-line + export-do.
+# Older Inkscape uses legacy multi-line actions with document-set-width/height.
 export_square_svg() {
 	local input_svg="$1"
 	local size="$2"
 	local output_svg="$3"
 
-	inkscape_run "$input_svg" \
-		--batch-process \
-		--actions="
-			select-all;
-			object-to-path;
-			page-fit-to-selection;
-			document-set-width:$size;
-			document-set-height:$size;
-			select-all;
-			object-align:hcenter;
-			object-align:vcenter;
-			export-plain-svg;
-			export-filename:$output_svg;
-		"
+	if [[ "$INKSCAPE_LEGACY_ACTIONS" -eq 1 ]]; then
+		# Legacy (Inkscape < 1.3): document-set-width/height, multi-line actions
+		inkscape_run "$input_svg" \
+			--batch-process \
+			--actions="
+				select-all;
+				object-to-path;
+				page-fit-to-selection;
+				document-set-width:$size;
+				document-set-height:$size;
+				select-all;
+				object-align:hcenter;
+				object-align:vcenter;
+				export-plain-svg;
+				export-filename:$output_svg;
+			"
+	else
+		# Inkscape 1.3+: no document-set-* (removed), single-line, explicit export-do
+		inkscape_run "$input_svg" \
+			--batch-process \
+			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;object-align:hcenter;object-align:vcenter;export-plain-svg;export-filename:$output_svg;export-do"
+	fi
+}
+
+# ==============================
+# SQUARE CANVAS POST-PROCESS (center content, no stretch)
+# ==============================
+# Inkscape 1.3+ does not set document size; exported SVG may be non-square.
+# This step makes the canvas square and centers the content so PNG export is not deformed.
+PYTHON3_BIN="$(command -v python3 || true)"
+square_svg_canvas() {
+	local svg_path="$1"
+	local size="$2"
+	[[ ! -f "$svg_path" ]] && return 1
+	[[ -z "$PYTHON3_BIN" ]] && return 1
+	"$PYTHON3_BIN" "${SCRIPT_DIR}/square_svg.py" "$svg_path" "$size" 2>/dev/null || true
 }
 
 # ==============================
@@ -243,9 +282,9 @@ process_one_size() {
 	log "	→ ${size}px (exporting)"
 
 	export_square_svg "$svg" "$size" "$out_svg"
+	# Make canvas square and center content (fixes non-square / stretched output)
+	square_svg_canvas "$out_svg" "$size"
 	export_square_png "$out_svg" "$size" "$out_png"
-	minify_svg "$out_svg"
-	minify_png "$out_png"
 }
 
 # ==============================
@@ -303,4 +342,45 @@ for svg in "${SVG_FILES[@]}"; do
 done
 
 wait_all
+
+# ==============================
+# SECOND PASS: MINIFY ALL GENERATED FILES
+# ==============================
+# Minification runs after the full Inkscape batch. Progress bar (normal) or per-file (verbose).
+MINIFY_FILES=()
+if [[ "$MINIFY_SVG" -eq 1 && -n "$SCOUR_BIN" ]] || [[ "$MINIFY_PNG" -eq 1 && -n "$OXIPNG_BIN" ]]; then
+	for size in "${SIZES[@]}"; do
+		for dir in "$ROOT_DIR"/mark "$ROOT_DIR"/badge; do
+			[[ ! -d "$dir/$size" ]] && continue
+			for f in "$dir/$size"/*.svg; do [[ -f "$f" ]] && MINIFY_FILES+=("$f" "svg"); done
+			for f in "$dir/$size"/*.png; do [[ -f "$f" ]] && MINIFY_FILES+=("$f" "png"); done
+		done
+	done
+	MINIFY_TOTAL=$((${#MINIFY_FILES[@]} / 2))
+	if [[ "$MINIFY_TOTAL" -gt 0 ]]; then
+		echo "Minifying $MINIFY_TOTAL generated file(s)..."
+		MINIFY_PROGRESS_BAR_WIDTH=30
+		idx=0
+		i=0
+		while [[ $i -lt "${#MINIFY_FILES[@]}" ]]; do
+			f="${MINIFY_FILES[$i]}"
+			typ="${MINIFY_FILES[$((i+1))]}"
+			((idx++)) || true
+			if [[ "$VERBOSE" -eq 1 ]]; then
+				echo "  minify: $f"
+			else
+				# Progress bar: [=====>     ] idx/total
+				filled=$((MINIFY_PROGRESS_BAR_WIDTH * idx / MINIFY_TOTAL))
+				empty=$((MINIFY_PROGRESS_BAR_WIDTH - filled))
+				bar="[$(printf "%${filled}s" "" | tr ' ' '=')$(printf "%${empty}s" "" | tr ' ' ' ')]"
+				printf "\r  %s %s/%s" "$bar" "$idx" "$MINIFY_TOTAL"
+			fi
+			if [[ "$typ" == "svg" ]]; then minify_svg "$f"; else minify_png "$f"; fi
+			((i += 2)) || true
+		done
+		[[ "$VERBOSE" -eq 0 ]] && echo
+		echo "Minification done."
+	fi
+fi
+
 echo "All icons exported successfully."

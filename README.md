@@ -112,6 +112,7 @@ You can combine flags:
 ### Requirements
 
 * [Inkscape](https://inkscape.org/) — must be installed and available as `inkscape` in your `PATH`
+* Python 3 — required for square-canvas post-processing (`scripts/square_svg.py`); ensures output is square and content centered (no stretch)
 * [Scour](https://github.com/scour-project/scour) — required for SVG minification; must be available as `scour` in your `PATH`
 * [oxipng](https://github.com/oxipng/oxipng) — required for lossless PNG minification; must be available as `oxipng` in your `PATH`
 * Bash environment
