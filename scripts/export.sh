@@ -213,10 +213,8 @@ export_square_svg() {
 	local output_svg="$3"
 	local scale
 	scale="$(awk "BEGIN { printf \"%.6f\", $size/1024 }")"
-	# Deep ungroup before export so no <g transform="..."> in output
-	# Legacy uses SelectionUnGroup; 1.3+ uses object-ungroup (SelectionUnGroup was removed)
+	# Deep ungroup before export so no <g transform="..."> in output (legacy only; 1.3+ action name varies/not available)
 	local ungroup_legacy="SelectionUnGroup;SelectionUnGroup;SelectionUnGroup;SelectionUnGroup;SelectionUnGroup"
-	local ungroup_13="object-ungroup;object-ungroup;object-ungroup;object-ungroup;object-ungroup"
 
 	# Center selection on page as a whole (multiple paths = one unit); group = treat selection as single bbox
 	local align_center="object-align:page,hcenter,vcenter,group"
@@ -242,10 +240,10 @@ export_square_svg() {
 				export-filename:$output_svg;
 			"
 	else
-		# Inkscape 1.3+: scale, fit canvas; then center selection on page (page may be non-square), export
+		# Inkscape 1.3+: scale, fit, center, export (no ungroup - action name not reliable across versions)
 		inkscape_run "$input_svg" \
 			--batch-process \
-			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;transform-scale:$scale;select-all:all;page-fit-to-selection;select-all:all;$align_center;select-all:all;$ungroup_13;export-plain-svg;export-filename:$output_svg;export-do"
+			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;transform-scale:$scale;select-all:all;page-fit-to-selection;select-all:all;$align_center;select-all:all;export-plain-svg;export-filename:$output_svg;export-do"
 	fi
 }
 
