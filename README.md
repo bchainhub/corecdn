@@ -80,6 +80,7 @@ The script `scripts/export.sh` generates all size variants from the base SVGs.
 * Use `--verbose` to enable normal Inkscape output.
 * Use `--svgnominify` to skip SVG minification (on by default when Scour is installed).
 * Use `--pngnominify` to skip PNG minification (on by default when oxipng is installed).
+* Use `--noadvert` to run **only** branding removal: strip advertisement/branding attributes (e.g. `xmlns:serif="http://www.serif.com/"` from Affinity) from SVG files in `*/base/` and exit. No export is run. Off by default.
 
 ### Overwrite Behavior
 
@@ -103,6 +104,9 @@ You can combine flags:
 # Skip SVG or PNG minification
 ./scripts/export.sh --svgnominify
 ./scripts/export.sh --pngnominify
+
+# Only strip branding from base SVGs (no export)
+./scripts/export.sh --noadvert
 ```
 
 ### Requirements

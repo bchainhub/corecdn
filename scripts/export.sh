@@ -8,6 +8,7 @@ OVERWRITE=0
 VERBOSE=0
 MINIFY_SVG=1
 MINIFY_PNG=1
+NOADVERT=0
 
 for arg in "$@"; do
 	case "$arg" in
@@ -25,6 +26,10 @@ for arg in "$@"; do
 			;;
 		--pngnominify)
 			MINIFY_PNG=0
+			shift
+			;;
+		--noadvert)
+			NOADVERT=1
 			shift
 			;;
 	esac
@@ -47,6 +52,41 @@ SCRIPT_DIR="$(
 	pwd
 )"
 ROOT_DIR="$(cd -- "${SCRIPT_DIR}/.." >/dev/null 2>&1 && pwd)"
+
+# ==============================
+# --noadvert: STRIP BRANDING FROM BASE SVGs ONLY, THEN EXIT
+# ==============================
+# Known advertisement/branding attributes to remove from <svg> root (e.g. Affinity/Serif).
+# Disabled by default; when --noadvert is set, only this runs (no export).
+strip_svg_adverts() {
+	local f="$1"
+	[[ ! -f "$f" ]] && return 1
+	local tmp
+	tmp="$(mktemp)"
+	# Remove known branding attributes (optional leading whitespace before attribute)
+	# Serif/Affinity: xmlns:serif="http://www.serif.com/"
+	sed 's/[[:space:]]*xmlns:serif="http:\/\/www\.serif\.com\/"//g' \
+		"$f" > "$tmp" && mv "$tmp" "$f"
+}
+
+if [[ "$NOADVERT" -eq 1 ]]; then
+	echo "Running in noadvert mode: stripping branding from */base/*.svg only."
+	echo "Repo root: $ROOT_DIR"
+	echo
+	count=0
+	while IFS= read -r -d '' f; do
+		strip_svg_adverts "$f"
+		echo "Stripped: $f"
+		((count++)) || true
+	done < <(find "$ROOT_DIR" -type f -path "*/base/*.svg" -print0 2>/dev/null)
+	if [[ "$count" -eq 0 ]]; then
+		echo "No SVG files found under */base/"
+	else
+		echo
+		echo "Done. Stripped $count base SVG file(s)."
+	fi
+	exit 0
+fi
 
 # ==============================
 # INKSCAPE
