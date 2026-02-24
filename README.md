@@ -1,86 +1,173 @@
 # CORE CDN
 
-This repository serves as a CDN (Content Delivery Network) for storing and deploying PNG and SVG image files. The images are organized in a specific folder structure, and you can access them through two different CDN URLs.
+This repository serves as a CDN (Content Delivery Network) for storing and deploying PNG and SVG image files. The images are organized in a specific folder structure and can be accessed through two CDN URLs.
 
 ## Actions
 
-- [Open repository page](https://github.com/bchainhub/corecdn)
-- [Fork repository](https://github.com/bchainhub/corecdn/fork)
-- [Open issue](https://github.com/bchainhub/corecdn/issues)
+* [Open repository page](https://github.com/bchainhub/corecdn)
+* [Fork repository](https://github.com/bchainhub/corecdn/fork)
+* [Open issue](https://github.com/bchainhub/corecdn/issues)
 
-## Click&Copy
+## Click & Copy
 
 > Modify the example link as needed
 
 ```url
 https://corecdn.info/mark/256/xcb.png
-```
+````
 
 ## Folder Structure and Path
 
-Source assets are **SVG files** in the `base` folder. A script generates multiple sizes in both SVG and PNG from these sources.
+Source assets are **SVG files** located in the `base` folder.
+A build script generates multiple square size variants (SVG + PNG) from these sources.
 
 ```txt
 [badge|mark]/base/{name}.svg         ← source (SVG only)
-[badge|mark]/[size]/{name}.svg       ← generated
-[badge|mark]/[size]/{name}.png       ← generated
+[badge|mark]/[size]/{name}.svg       ← generated (square page)
+[badge|mark]/[size]/{name}.png       ← generated (square image)
 ```
 
-- **badge/mark**: Top-level directory for badge or mark images.
-- **base**: Contains the source SVG files. Only SVGs live here; PNGs are generated.
-- **size**: Generated output folders named by pixel size (see list below).
-- **{name}**: The filename without extension.
+### Structure Explanation
 
-### Generated sizes
+* **badge / mark** — Top-level directories for badge or mark images.
+* **base** — Contains only original source SVG files.
+* **size** — Generated output folders named by pixel size.
+* **{name}** — Filename without extension.
 
-The script produces icons at these pixel sizes (in both SVG and PNG):
+### Base SVG: no `<g>` tags
+
+Using **`<g>` (group) tags** in base SVGs is **not supported**. Base images that contain `<g>` elements are **filtered out** by the build script and will not be exported.
+
+To fix such SVGs, remove the group elements so the content is ungrouped. In Inkscape: use **Object → Ungroup** (or ungroup in the Layers panel) until no `<g>` wrappers remain, then save.
+
+### Generated Sizes
+
+The script produces square icons at these pixel sizes (both SVG and PNG):
 
 **16**, **24**, **32**, **48**, **64**, **72**, **96**, **128**, **144**, **192**, **256**, **512**, **1024**
 
-## Build script
+Each generated file:
 
-The script `scripts/resize_icons.sh` generates all size variants from the base SVGs:
+* Preserves original aspect ratio (no deformation)
+* Scales proportionally
+* Expands canvas to a square
+* Centers artwork on transparent background
 
-1. Finds every SVG under `badge/base/` and `mark/base/`.
-2. For each base SVG, creates a folder per size (e.g. `mark/256/`) and:
-   - Copies the SVG into that folder.
-   - Exports a PNG at that pixel size using Inkscape.
+## Build Script
 
-**Requirements:** [Inkscape](https://inkscape.org/) must be installed and on your `PATH`.
+The script `scripts/export.sh` generates all size variants from the base SVGs.
 
-**Run from the repo root:**
+### What it does
+
+1. Finds every SVG under:
+
+   * `badge/base/`
+   * `mark/base/`
+
+2. For each base SVG and each size:
+
+   * Scales proportionally (largest side = target size)
+   * Fits page to drawing
+   * Expands page to square
+   * Centers artwork
+   * Exports:
+     * Square SVG
+     * Square PNG
+
+### Quiet / Verbose Modes
+
+* By default, the script runs in **quiet mode** (suppresses Inkscape and macOS ColorSync messages).
+* Use `--verbose` to enable normal Inkscape output.
+* Use `--svgnominify` to skip SVG minification (on by default when Scour is installed).
+* Use `--pngnominify` to skip PNG minification (on by default when oxipng is installed).
+
+### Overwrite Behavior
+
+By default:
+
+* Existing generated files are **not overwritten**
+* Only missing files are created
+
+To regenerate everything:
 
 ```bash
-./scripts/resize_icons.sh
+./scripts/export.sh --overwrite
 ```
 
-After running, commit the updated `badge/<size>/` and `mark/<size>/` folders as needed.
+You can combine flags:
+
+```bash
+# Verbose and overwrite everything
+./scripts/export.sh --overwrite --verbose
+
+# Skip SVG or PNG minification
+./scripts/export.sh --svgnominify
+./scripts/export.sh --pngnominify
+```
+
+### Requirements
+
+* [Inkscape](https://inkscape.org/) — must be installed and available as `inkscape` in your `PATH`
+* [Scour](https://github.com/scour-project/scour) — required for SVG minification; must be available as `scour` in your `PATH`
+* [oxipng](https://github.com/oxipng/oxipng) — required for lossless PNG minification; must be available as `oxipng` in your `PATH`
+* Bash environment
+
+### How to install Scour
+
+* Homebrew (macOS): `brew install scour`
+* pip (any OS): `pip install scour` or `pip3 install scour`
+
+### How to install oxipng
+
+* Homebrew (macOS): `brew install oxipng`
+* Other systems: check [oxipng releases](https://github.com/oxipng/oxipng/releases) or your package manager (e.g. `cargo install oxipng` if you have Rust)
+
+### Run Build
+
+From the repository root:
+
+```bash
+./scripts/export.sh
+```
+
+After running, commit updated `badge/<size>/` and `mark/<size>/` folders as needed.
 
 ## CDN URLs
 
-You can access the image files through the following CDN URLs:
+You can access image files through:
 
-1. **jsDelivr**: You can access the files using the URL: [https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}](https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}). Replace `{path}` with the path to the desired image file.
+### jsDelivr
 
-2. **corecdn.info**: Alternatively, you can access the files using the URL: [https://corecdn.info/{path}](https://corecdn.info/{path}). Replace `{path}` with the path to the specific image file.
-
-## Usage
-
-To use the image files in your project, you can directly reference the URLs mentioned above. You can integrate these URLs into your web pages, apps, or any other platform that supports image rendering.
-
-Here's an example of how you can use the CDN URLs in HTML:
-
-```html
-<img src="https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}" alt="Image Name">
+```url
+https://cdn.jsdelivr.net/gh/bchainhub/corecdn/{path}
 ```
 
-Replace `{path}` with the actual path to the image file you want to display.
+Replace `{path}` with the desired image path.
+
+### corecdn.info
+
+```url
+https://corecdn.info/{path}
+```
+
+Replace `{path}` with the desired image path.
+
+## Usage Example
+
+```html
+<img src="https://cdn.jsdelivr.net/gh/bchainhub/corecdn/mark/256/xcb.png" alt="XCB Logo">
+```
 
 ## Contributing
 
-Contributions to this project are welcome. If you have any suggestions, improvements, or bug fixes, please open an issue to discuss them first. For major changes, it is recommended to discuss them before implementing.
+Contributions are welcome.
 
-Please make sure to update any relevant tests when contributing to this project.
+If you have suggestions, improvements, or fixes:
+
+1. Open an issue first
+2. Discuss major changes before implementation
+3. Keep folder structure consistent
+4. Do not manually edit generated folders — use the build script
 
 ## License
 
