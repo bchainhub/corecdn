@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
 Make an SVG canvas square and center the content. Preserves aspect ratio; no stretch.
-Reads SVG from path, sets viewBox to a square (side = max(width, height)), wraps content
-in a group with translate(dx, dy) to center, and sets width/height to the given pixel size.
+Reads SVG from path, sets viewBox to "0 0 size size" (so 1 unit = 1 pixel), wraps content
+in a group with scale(size/side) translate(dx, dy) so it fits and is centered, and sets
+width/height to the given pixel size.
 Usage: square_svg.py <svg_path> <size>
 """
 import os
+import re
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
@@ -63,10 +65,15 @@ def main():
         sys.exit(1)
     dx = (side - w) / 2.0 - min_x
     dy = (side - h) / 2.0 - min_y
+    # Round to 3 decimals to avoid floating-point noise and misaligned curves in viewers
+    side = round(side, 3)
+    dx = round(dx, 3)
+    dy = round(dy, 3)
+    scale = round(size / side, 6)
 
-    # Build a wrapper group with transform
+    # Build a wrapper group: scale so viewBox can be 0 0 size size, then translate to center
     wrapper = ET.Element(q("g"))
-    wrapper.set("transform", "translate(%s,%s)" % (dx, dy))
+    wrapper.set("transform", "scale(%s) translate(%s,%s)" % (scale, dx, dy))
 
     # Move all current children into the wrapper (preserve order)
     children = list(root)
@@ -75,8 +82,8 @@ def main():
         wrapper.append(child)
     root.append(wrapper)
 
-    # Set square viewBox and output size
-    root.set("viewBox", "0 0 %s %s" % (side, side))
+    # Set viewBox to match requested size (1 unit = 1 pixel) and output dimensions
+    root.set("viewBox", "0 0 %s %s" % (size, size))
     root.set("width", str(size))
     root.set("height", str(size))
 
@@ -100,6 +107,12 @@ def main():
         content = content.replace("</ns0:svg>", "</svg>")
         content = content.replace(' xmlns:ns0="%s"' % SVG_NS, "")
         content = content.replace("ns0:", "")  # <ns0:g> -> <g>, etc.
+        # Force viewBox and width/height on root so the original is never kept
+        new_viewbox = 'viewBox="0 0 %s %s"' % (size, size)
+        new_wh = 'width="%s" height="%s"' % (size, size)
+        content = re.sub(r'\bviewBox="[^"]*"', new_viewbox, content, count=1)
+        content = re.sub(r'\bwidth="[^"]*"', 'width="%s"' % size, content, count=1)
+        content = re.sub(r'\bheight="[^"]*"', 'height="%s"' % size, content, count=1)
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
     finally:

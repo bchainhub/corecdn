@@ -118,13 +118,14 @@ minify_svg() {
 	[[ "$MINIFY_SVG" -eq 0 || -z "$SCOUR_BIN" ]] && return 0
 	[[ ! -f "$f" ]] && return 0
 	# Minify to temp file then replace (safe overwrite). Safe to call on missing file (no-op).
+	# Use precision 6 to avoid misaligned curves (4 can shift path points and break joins)
 	"$SCOUR_BIN" -q \
 		-i "$f" \
 		-o "${f}.min" \
 		--no-line-breaks \
 		--remove-descriptive-elements \
 		--enable-comment-stripping \
-		--set-precision=4 \
+		--set-precision=6 \
 		&& mv "${f}.min" "$f"
 }
 
@@ -223,8 +224,6 @@ export_square_svg() {
 				document-set-width:$size;
 				document-set-height:$size;
 				select-all;
-				object-align:hcenter;
-				object-align:vcenter;
 				export-plain-svg;
 				export-filename:$output_svg;
 			"
@@ -232,7 +231,7 @@ export_square_svg() {
 		# Inkscape 1.3+: no document-set-* (removed), single-line, explicit export-do
 		inkscape_run "$input_svg" \
 			--batch-process \
-			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;object-align:hcenter;object-align:vcenter;export-plain-svg;export-filename:$output_svg;export-do"
+			--actions="select-all:all;object-to-path;page-fit-to-selection;select-all:all;export-plain-svg;export-filename:$output_svg;export-do"
 	fi
 }
 
