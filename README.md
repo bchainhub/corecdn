@@ -14,7 +14,7 @@ This repository serves as a CDN (Content Delivery Network) for storing and deplo
 
 ```url
 https://corecdn.info/mark/256/xcb.png
-````
+```
 
 ## Folder Structure and Path
 
@@ -81,6 +81,7 @@ The script `scripts/export.sh` generates all size variants from the base SVGs.
 * Use `--svgnominify` to skip SVG minification (on by default when Scour is installed).
 * Use `--pngnominify` to skip PNG minification (on by default when oxipng is installed).
 * Use `--noadvert` to run **only** branding removal: strip advertisement/branding attributes (e.g. `xmlns:serif="http://www.serif.com/"` from Affinity) from SVG files in `*/base/` and exit. No export is run. Off by default.
+* Use `--analyze` to **check** all base SVGs in `mark/base` and `badge/base` for correctness (XML, viewBox, no `<g>`, valid path data). Reports malformed path `d` with exact reason (e.g. `invalid_number`, `not_enough_params`). No export is run. Exit code 1 if any file has issues.
 
 ### Overwrite Behavior
 
@@ -107,7 +108,17 @@ You can combine flags:
 
 # Only strip branding from base SVGs (no export)
 ./scripts/export.sh --noadvert
+
+# Check base SVGs for correctness (no export)
+./scripts/export.sh --analyze
 ```
+
+### Progress and Parallelism
+
+* The script shows an **export progress** count (e.g. `Export [=========>----] 423/1378`) so you can see it is not frozen.
+* Exports run in **parallel** (default job count = number of CPU cores). To limit concurrency: `JOBS=4 ./scripts/export.sh`
+* If export appears to hang, try `JOBS=1 ./scripts/export.sh --overwrite --verbose` to run one task at a time and see which file or size gets stuck.
+* Optional: install **coreutils** (`brew install coreutils`) to get `gtimeout`. The script will then apply a timeout to the normalize step and to Inkscape so a single stuck task does not block the run.
 
 ### Requirements
 
@@ -127,6 +138,10 @@ You can combine flags:
 * Homebrew (macOS): `brew install oxipng`
 * Other systems: check [oxipng releases](https://github.com/oxipng/oxipng/releases) or your package manager (e.g. `cargo install oxipng` if you have Rust)
 
+### Optional: timeout for stuck tasks
+
+* `brew install coreutils` provides `gtimeout`. If available, the build script uses it to limit the normalize step and each Inkscape run so one stuck task does not freeze the whole export.
+
 ### Run Build
 
 From the repository root:
@@ -136,6 +151,16 @@ From the repository root:
 ```
 
 After running, commit updated `badge/<size>/` and `mark/<size>/` folders as needed.
+
+### Analyze base SVGs (no export)
+
+To check that all base SVGs are valid and will export correctly:
+
+```bash
+./scripts/export.sh --analyze
+```
+
+This reports XML errors, `<g>` usage, viewBox issues, and **malformed path data** with a specific reason (e.g. `invalid_number`, `not_enough_params`, `iteration_limit`). Fix any reported files before running a full export.
 
 ## CDN URLs
 

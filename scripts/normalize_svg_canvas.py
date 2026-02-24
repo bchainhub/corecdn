@@ -79,7 +79,7 @@ def _path_d_bbox(d):
         while i + n <= len(tokens) and (
             first or (tokens[i] not in _PATH_PARAMS or tokens[i] in "Mm")
         ):
-            if tokens[i] in _PATH_PARAMS and tokens[i] not in "Mm" and not first:
+            if tokens[i] in _PATH_PARAMS and not first and (tokens[i] not in "Mm" or cmd not in "Mm"):
                 break
             first = False
             if cmd in "Mm" and not first:
@@ -217,7 +217,7 @@ def path_d_analyze(d):
             while i + n <= len(tokens) and (
                 first or (tokens[i] not in _PATH_PARAMS or tokens[i] in "Mm")
             ):
-                if tokens[i] in _PATH_PARAMS and tokens[i] not in "Mm" and not first:
+                if tokens[i] in _PATH_PARAMS and not first and (tokens[i] not in "Mm" or cmd not in "Mm"):
                     break
                 first = False
                 if cmd in "Mm" and not first:
@@ -403,7 +403,7 @@ def _transform_path_d(d, scale, dx, dy):
             while i + n <= len(tokens) and (
                 first or (tokens[i] not in _PATH_PARAMS or tokens[i] in "Mm")
             ):
-                if tokens[i] in _PATH_PARAMS and tokens[i] not in "Mm" and not first:
+                if tokens[i] in _PATH_PARAMS and not first and (tokens[i] not in "Mm" or cmd not in "Mm"):
                     break
                 first = False
                 if cmd in "Mm" and not first and (last_cmd is not None and last_cmd in "Mm"):
