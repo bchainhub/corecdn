@@ -10,6 +10,8 @@ MINIFY_SVG=1
 MINIFY_PNG=1
 NOADVERT=0
 ANALYZE=0
+# SVG resize: 0 = scale from base in Python only (better alignment); 1 = Inkscape export then normalize
+INKSCAPE_SVG=0
 
 for arg in "$@"; do
 	case "$arg" in
@@ -35,6 +37,10 @@ for arg in "$@"; do
 			;;
 		--analyze)
 			ANALYZE=1
+			shift
+			;;
+		--inkscape-svg)
+			INKSCAPE_SVG=1
 			shift
 			;;
 	esac
@@ -115,6 +121,16 @@ fi
 INKSCAPE_BIN="$(command -v inkscape || true)"
 if [[ -z "$INKSCAPE_BIN" ]]; then
 	echo "Error: inkscape not found in PATH."
+	exit 1
+fi
+
+# ==============================
+# SVG RESIZE + CENTER (required: Homebrew librsvg)
+# ==============================
+# rsvg-convert (brew install librsvg) resizes SVG to a square and preserves aspect ratio.
+RSVG_CONVERT_BIN="$(command -v rsvg-convert || true)"
+if [[ -z "$RSVG_CONVERT_BIN" ]]; then
+	echo "Error: rsvg-convert not found. Install librsvg: brew install librsvg"
 	exit 1
 fi
 # Parse major.minor (e.g. 1.3 from "Inkscape 1.3.2 ...") for action compatibility
@@ -201,10 +217,12 @@ log() {
 echo "Starting icon export…"
 echo "Repo root: $ROOT_DIR"
 echo "Inkscape: ${INKSCAPE_VER:-unknown} ($([[ "$INKSCAPE_LEGACY_ACTIONS" -eq 1 ]] && echo 'legacy actions' || echo '1.3+ actions'))"
+echo "SVG resize+center: librsvg (rsvg-convert)"
+echo "SVG source: $([[ "$INKSCAPE_SVG" -eq 1 ]] && echo 'Inkscape (--inkscape-svg)' || echo 'base SVG')"
 echo "Overwrite mode: $OVERWRITE"
 echo "Verbose mode: $VERBOSE"
 echo "Parallel jobs: $JOBS"
-[[ "$VERBOSE" -eq 1 ]] && echo "Tip: if export hangs, try JOBS=1. To auto-kill stuck tasks (e.g. in normalize), install coreutils: brew install coreutils (provides gtimeout)."
+[[ "$VERBOSE" -eq 1 ]] && echo "Tip: if export hangs, try JOBS=1. To auto-kill stuck tasks: brew install coreutils (gtimeout)."
 if [[ "$MINIFY_SVG" -eq 1 && -n "$SCOUR_BIN" ]]; then
 	echo "SVG minification: on (scour)"
 elif [[ "$MINIFY_SVG" -eq 0 ]]; then
@@ -289,22 +307,19 @@ export_square_svg() {
 }
 
 # ==============================
-# NORMALIZE SVG CANVAS (square viewBox, centered content; no wrapper <g>)
+# NORMALIZE SVG TO SQUARE (resize + center via librsvg)
 # ==============================
-# Inkscape export can leave a non-square viewBox (e.g. 166x256). This step forces
-# viewBox 0 0 size size and bakes scale/translate into path data so SVG and PNG are correct.
-PYTHON3_BIN="$(command -v python3 || true)"
-NORMALIZE_TIMEOUT_SEC=120
-normalize_svg_canvas() {
+normalize_svg_to_square() {
 	local svg_path="$1"
 	local size="$2"
 	[[ ! -f "$svg_path" ]] && return 1
-	[[ -z "$PYTHON3_BIN" ]] && return 1
-	if [[ -n "$INKSCAPE_TIMEOUT_BIN" ]]; then
-		"$INKSCAPE_TIMEOUT_BIN" "$NORMALIZE_TIMEOUT_SEC" "$PYTHON3_BIN" "${SCRIPT_DIR}/normalize_svg_canvas.py" "$svg_path" "$size" 2>/dev/null || true
-	else
-		"$PYTHON3_BIN" "${SCRIPT_DIR}/normalize_svg_canvas.py" "$svg_path" "$size" 2>/dev/null || true
-	fi
+	local tmp
+	tmp="$(mktemp)"
+	cp "$svg_path" "$tmp"
+	"$RSVG_CONVERT_BIN" -w "$size" -h "$size" -a -f svg -o "$svg_path" "$tmp"
+	local ret=$?
+	rm -f "$tmp"
+	return $ret
 }
 
 # ==============================
@@ -328,6 +343,7 @@ export_square_png() {
 # PROCESS ONE SIZE
 # ==============================
 # Optional: run entire task under timeout so one stuck job (e.g. normalize) doesn't block forever.
+# By default we scale from base in Python only (one transform = better alignment). Use --inkscape-svg for the old path.
 process_one_size() {
 	local svg="$1"
 	local size="$2"
@@ -340,11 +356,17 @@ process_one_size() {
 	fi
 
 	log "	→ ${size}px (exporting)"
-	log "	    [${size}px] Inkscape SVG..."
-	export_square_svg "$svg" "$size" "$out_svg"
-	log "	    [${size}px] Inkscape SVG done; normalize..."
-	normalize_svg_canvas "$out_svg" "$size"
-	log "	    [${size}px] normalize done; Inkscape PNG..."
+	if [[ "$INKSCAPE_SVG" -eq 1 ]]; then
+		log "	    [${size}px] Inkscape SVG..."
+		export_square_svg "$svg" "$size" "$out_svg"
+		log "	    [${size}px] Inkscape SVG done; resize to square..."
+		normalize_svg_to_square "$out_svg" "$size"
+	else
+		log "	    [${size}px] copy base; resize to square..."
+		cp "$svg" "$out_svg"
+		normalize_svg_to_square "$out_svg" "$size"
+	fi
+	log "	    [${size}px] resize done; Inkscape PNG..."
 	export_square_png "$out_svg" "$size" "$out_png"
 	log "	    [${size}px] done."
 }

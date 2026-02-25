@@ -1,0 +1,7 @@
+# Only allow opening issues using one of the templates below (no blank issues).
+blank_issues_enabled: false
+# Link to docs when user tries to open a blank issue (GitHub shows this when blank is disabled).
+contact_links:
+  - name: 📖 README & docs
+    url: https://github.com/bchainhub/corecdn#readme
+    about: Read the repository README for setup, requirements, and usage.

@@ -82,6 +82,7 @@ The script `scripts/export.sh` generates all size variants from the base SVGs.
 * Use `--pngnominify` to skip PNG minification (on by default when oxipng is installed).
 * Use `--noadvert` to run **only** branding removal: strip advertisement/branding attributes (e.g. `xmlns:serif="http://www.serif.com/"` from Affinity) from SVG files in `*/base/` and exit. No export is run. Off by default.
 * Use `--analyze` to **check** all base SVGs in `mark/base` and `badge/base` for correctness (XML, viewBox, no `<g>`, valid path data). Reports malformed path `d` with exact reason (e.g. `invalid_number`, `not_enough_params`). No export is run. Exit code 1 if any file has issues.
+* Use `--inkscape-svg` to generate resized SVGs via **Inkscape** (scale + fit + center) then resize to square. By default the script copies the base SVG and resizes it with **librsvg** (`rsvg-convert`).
 
 ### Overwrite Behavior
 
@@ -118,14 +119,15 @@ You can combine flags:
 * The script shows an **export progress** count (e.g. `Export [=========>----] 423/1378`) so you can see it is not frozen.
 * Exports run in **parallel** (default job count = number of CPU cores). To limit concurrency: `JOBS=4 ./scripts/export.sh`
 * If export appears to hang, try `JOBS=1 ./scripts/export.sh --overwrite --verbose` to run one task at a time and see which file or size gets stuck.
-* Optional: install **coreutils** (`brew install coreutils`) to get `gtimeout`. The script will then apply a timeout to the normalize step and to Inkscape so a single stuck task does not block the run.
+* Optional: install **coreutils** (`brew install coreutils`) to get `gtimeout`. The script will then apply a timeout to Inkscape so a single stuck task does not block the run.
 
 ### Requirements
 
-* [Inkscape](https://inkscape.org/) — must be installed and available as `inkscape` in your `PATH`. Base SVGs use viewBox 0 0 1024 1024.
-* Python 3 — used by `scripts/normalize_svg_canvas.py` to force a square viewBox and correct dimensions after Inkscape export (required for correct SVG and PNG output).
-* [Scour](https://github.com/scour-project/scour) — required for SVG minification; must be available as `scour` in your `PATH`
-* [oxipng](https://github.com/oxipng/oxipng) — required for lossless PNG minification; must be available as `oxipng` in your `PATH`
+* [Inkscape](https://inkscape.org/) — required for PNG export and optionally for SVG export (`--inkscape-svg`). Must be available as `inkscape` in your `PATH`.
+* [librsvg](https://wiki.gnome.org/Projects/LibRsvg) — required for resize + center. Install: `brew install librsvg`. Provides `rsvg-convert`, which resizes each SVG to the target size (e.g. 256×256) while preserving aspect ratio and centering.
+* [Scour](https://github.com/scour-project/scour) — for SVG minification; must be available as `scour` in your `PATH`
+* [oxipng](https://github.com/oxipng/oxipng) — for lossless PNG minification; must be available as `oxipng` in your `PATH`
+* Python 3 — only for `--analyze` (checking base SVGs). Not used for export.
 * Bash environment
 
 ### How to install Scour
@@ -140,7 +142,15 @@ You can combine flags:
 
 ### Optional: timeout for stuck tasks
 
-* `brew install coreutils` provides `gtimeout`. If available, the build script uses it to limit the normalize step and each Inkscape run so one stuck task does not freeze the whole export.
+* `brew install coreutils` provides `gtimeout`. If available, the build script uses it to limit each Inkscape run so one stuck task does not freeze the whole export.
+
+### Optional: alternatives to Inkscape for PNG export
+
+The script uses **Inkscape** to export PNGs from the generated SVGs. If you prefer a different renderer (e.g. for consistency or to avoid Inkscape-related issues), you can install and use alternatives; the script does not integrate them automatically.
+
+* **resvg** — Fast, accurate SVG renderer with a CLI. Install: `brew install resvg` (if available) or build from [RazrFalcon/resvg](https://github.com/RazrFalcon/resvg). Use it to rasterize the generated SVGs (e.g. `resvg input.svg output.png`) and optionally replace the PNG export step in your workflow.
+* **CairoSVG** — Python-based SVG to PNG converter. Install: `pip install cairosvg`. Use: `cairosvg -o output.png -W 256 -H 256 input.svg` for a given size.
+* The **SVG files** produced by the script are standard and can be opened or converted by any SVG-capable tool; only the **PNG export** step in `export.sh` is tied to Inkscape unless you change the script.
 
 ### Run Build
 

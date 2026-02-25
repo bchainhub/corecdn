@@ -10,16 +10,155 @@ Usage: analyze_base_svg.py <repo_root>
 Called by scripts/export.sh when --analyze is passed.
 """
 import os
+import re
 import sys
 import xml.etree.ElementTree as ET
 
-# Import from same dir so export.sh can run: python3 scripts/analyze_base_svg.py ROOT
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-if SCRIPT_DIR not in sys.path:
-    sys.path.insert(0, SCRIPT_DIR)
-from normalize_svg_canvas import path_d_analyze
-
 SVG_NS = "http://www.w3.org/2000/svg"
+
+# Path command letter -> number of params per repetition (for path 'd' parsing)
+_PATH_PARAMS = {
+    "M": 2, "m": 2, "L": 2, "l": 2, "H": 1, "h": 1, "V": 1, "v": 1,
+    "C": 6, "c": 6, "S": 4, "s": 4, "Q": 4, "q": 4, "T": 2, "t": 2,
+    "A": 7, "a": 7, "Z": 0, "z": 0,
+}
+_PATH_PARSE_MAX_ITER = 2_000_000
+
+
+def path_d_analyze(d):
+    """
+    Parse path 'd' and return (bbox, None) on success or (None, reason) on failure.
+    Reasons: empty, no_tokens, iteration_limit, not_enough_params, invalid_number, no_geometry.
+    """
+    if not d or not d.strip():
+        return (None, "empty")
+    tokens = re.findall(r"[MLHVCSQTAZmlhvcsqtaz]|[-+]?(?:\d*\.?\d+(?:[eE][-+]?\d+)?)", d)
+    if not tokens:
+        return (None, "no_tokens")
+    min_x = min_y = float("inf")
+    max_x = max_y = float("-inf")
+    i = 0
+    current_x = current_y = 0.0
+    start_x = start_y = 0.0
+    iterations = 0
+
+    def consume(n):
+        nonlocal i
+        if i + n > len(tokens):
+            raise IndexError("not enough params")
+        vals = [float(tokens[i + k]) for k in range(n)]
+        i += n
+        return vals
+
+    def update(*pts):
+        nonlocal min_x, min_y, max_x, max_y
+        for (x, y) in pts:
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x)
+            max_y = max(max_y, y)
+
+    try:
+        while i < len(tokens):
+            iterations += 1
+            if iterations > _PATH_PARSE_MAX_ITER:
+                return (None, "iteration_limit")
+            t = tokens[i]
+            if t not in _PATH_PARAMS:
+                i += 1
+                continue
+            cmd = t
+            i += 1
+            n = _PATH_PARAMS[cmd]
+            if n == 0:
+                update((start_x, start_y))
+                continue
+            first = True
+            while i + n <= len(tokens) and (
+                first or (tokens[i] not in _PATH_PARAMS or tokens[i] in "Mm")
+            ):
+                if tokens[i] in _PATH_PARAMS and not first and (tokens[i] not in "Mm" or cmd not in "Mm"):
+                    break
+                first = False
+                if cmd in "Mm" and not first:
+                    cmd = "L" if cmd == "M" else "l"
+                    n = 2
+                if cmd in "ML":
+                    x, y = consume(2)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd in "ml":
+                    x, y = consume(2)
+                    current_x, current_y = current_x + x, current_y + y
+                    update((current_x, current_y))
+                elif cmd == "H":
+                    x = consume(1)[0]
+                    current_x = x
+                    update((x, current_y))
+                elif cmd == "h":
+                    current_x += consume(1)[0]
+                    update((current_x, current_y))
+                elif cmd == "V":
+                    y = consume(1)[0]
+                    current_y = y
+                    update((current_x, y))
+                elif cmd == "v":
+                    current_y += consume(1)[0]
+                    update((current_x, current_y))
+                elif cmd == "C":
+                    x1, y1, x2, y2, x, y = consume(6)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "c":
+                    dx1, dy1, dx2, dy2, dx_val, dy_val = consume(6)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "S":
+                    x2, y2, x, y = consume(4)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "s":
+                    dx2, dy2, dx_val, dy_val = consume(4)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "Q":
+                    x1, y1, x, y = consume(4)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "q":
+                    dx1, dy1, dx_val, dy_val = consume(4)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "T":
+                    x, y = consume(2)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "t":
+                    dx_val, dy_val = consume(2)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                elif cmd == "A":
+                    rx, ry, rot, la, sweep, x, y = consume(7)
+                    current_x, current_y = x, y
+                    update((x, y))
+                elif cmd == "a":
+                    rx, ry, rot, la, sweep, dx_val, dy_val = consume(7)
+                    current_x += dx_val
+                    current_y += dy_val
+                    update((current_x, current_y))
+                if cmd in "Mm":
+                    start_x, start_y = current_x, current_y
+        if min_x == float("inf"):
+            return (None, "no_geometry")
+        return ((min_x, min_y, max_x, max_y), None)
+    except IndexError:
+        return (None, "not_enough_params")
+    except ValueError:
+        return (None, "invalid_number")
 
 
 def _local_tag(el):
