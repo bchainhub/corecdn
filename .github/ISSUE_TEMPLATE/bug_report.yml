@@ -1,14 +1,8 @@
 name: Report bug
 description: Report a bug or incorrect behaviour
-title: "[Bug]: "
 labels: [bug]
 assignees: [rastislavcore]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        **Please check the [README](https://github.com/bchainhub/corecdn#readme) for requirements and usage.**
-
   - type: textarea
     id: description
     attributes:
