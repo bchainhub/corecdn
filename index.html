@@ -1,48 +1,337 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>CORE CDN</title>
-    <script src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Core CDN</title>
     <style>
+        :root {
+            --bg: #1a1b1e;
+            --surface: #25262b;
+            --border: #373a40;
+            --text: #e0e0e0;
+            --text-muted: #868e96;
+            --accent: #4dabf7;
+            --accent-hover: #74c0fc;
+            --success: #51cf66;
+            --radius: 10px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+        * { box-sizing: border-box; }
         html {
-            background-color: #323232;
-            color: #e0e0e0;
-            padding: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
-        a {
-            color: #a9b4ed;
+        body {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
         }
-        a:visited {
-            color: #c8a9ed;
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 0.25rem 0;
+            letter-spacing: -0.02em;
         }
-        code.language-url {
-            font-size: 1.5rem;
-            padding: 0.3rem;
-            user-select: all;
-            -moz-user-select: all;
-            -webkit-user-select: all;
-            background-color: rgb(116 116 116 / 50%);
+        .tagline {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        .card-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .field {
+            flex: 1;
+            min-width: 0;
+        }
+        .field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        select:hover, input[type="text"]:hover {
+            border-color: var(--text-muted);
+        }
+        select:focus, input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+        }
+        select {
+            cursor: context-menu;
+        }
+        .url-output {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .url-output input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.6rem 0.75rem;
+            font-size: 0.9rem;
+            font-family: ui-monospace, "Cascadia Code", "SF Mono", Monaco, monospace;
+            color: var(--accent);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            outline: none;
+            white-space: nowrap;
+            overflow-x: auto;
+            cursor: text;
+        }
+        .url-output input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+        }
+        .copy-btn {
+            flex-shrink: 0;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .copy-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .copy-btn.copied {
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .format-toggle {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.75rem;
+        }
+        .format-toggle button {
+            padding: 0.35rem 0.6rem;
+            font-size: 0.8rem;
+            font-family: inherit;
+            color: var(--text-muted);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
+        }
+        .format-toggle button:hover {
+            color: var(--text);
+            border-color: var(--text-muted);
+        }
+        .format-toggle button.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(77, 171, 247, 0.1);
+        }
+        .cdn-field {
+            margin-top: 1rem;
+            max-width: 200px;
+        }
+        .links {
+            font-size: 0.9rem;
+        }
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div id="content"></div>
+    <h1>Core CDN</h1>
+    <p class="tagline">PNG & SVG assets — pick type, size, and name to get your URL.</p>
+
+    <div class="card">
+        <div class="card-title">Build URL</div>
+        <div class="row">
+            <div class="field" style="min-width: 100px;">
+                <label for="type">Type</label>
+                <select id="type">
+                    <option value="mark">Mark</option>
+                    <option value="badge">Badge</option>
+                </select>
+            </div>
+            <div class="field" style="min-width: 90px;">
+                <label for="size">Size</label>
+                <select id="size">
+                    <option value="16">16</option>
+                    <option value="24">24</option>
+                    <option value="32">32</option>
+                    <option value="48">48</option>
+                    <option value="64" selected>64</option>
+                    <option value="72">72</option>
+                    <option value="96">96</option>
+                    <option value="128">128</option>
+                    <option value="144">144</option>
+                    <option value="192">192</option>
+                    <option value="256">256</option>
+                    <option value="512">512</option>
+                    <option value="1024">1024</option>
+                </select>
+            </div>
+            <div class="field" style="flex: 1.5; min-width: 120px;">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="xcb" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+        <div class="format-toggle">
+            <button type="button" data-format="png" class="active">PNG</button>
+            <button type="button" data-format="svg">SVG</button>
+        </div>
+        <div class="field cdn-field">
+            <label for="cdn">CDN</label>
+            <select id="cdn">
+                <option value="corecdn" selected>Core CDN</option>
+                <option value="jsdelivr">jsDelivr</option>
+                <option value="github">GitHub Raw</option>
+                <option value="statically">Statically</option>
+            </select>
+        </div>
+        <div class="url-output" id="output">
+            <input type="text" id="url-input" readonly value="" aria-label="Generated URL">
+            <button type="button" class="copy-btn" id="copy-btn">Copy</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="links">
+            <a href="https://github.com/bchainhub/corecdn" target="_blank" rel="noopener">Repository</a>
+            &nbsp;·&nbsp;
+            <a href="https://github.com/bchainhub/corecdn/blob/main/README.md" target="_blank" rel="noopener">Readme</a>
+            &nbsp;·&nbsp;
+            <a href="https://github.com/bchainhub/corecdn/issues/new?template=add_asset.yml" target="_blank" rel="noopener">Add Asset</a>
+            &nbsp;·&nbsp;
+            <a href="https://github.com/bchainhub/corecdn/issues/new?template=bug_report.yml" target="_blank" rel="noopener">Report Bug</a>
+        </div>
+    </div>
 
     <script>
-        var md = window.markdownit();
-        fetch('https://raw.githubusercontent.com/bchainhub/corecdn/master/README.md')
-            .then(function(response) {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    return Promise.reject(response);
-                }
-            }).then(function(data) {
-                var htmlContent = md.render(data);
-                document.getElementById('content').innerHTML = htmlContent;
-            }).catch(function(err) {
-                document.getElementById('content').innerHTML = '<h2>Failed to load the documentation!</h2>';
+        (function () {
+            var cdns = {
+                corecdn: 'https://corecdn.info',
+                jsdelivr: 'https://cdn.jsdelivr.net/gh/bchainhub/corecdn',
+                github: 'https://raw.githubusercontent.com/bchainhub/corecdn/master',
+                statically: 'https://cdn.statically.io/gh/bchainhub/corecdn/master'
+            };
+            var typeEl = document.getElementById('type');
+            var sizeEl = document.getElementById('size');
+            var nameEl = document.getElementById('name');
+            var cdnEl = document.getElementById('cdn');
+            var urlInput = document.getElementById('url-input');
+            var copyBtn = document.getElementById('copy-btn');
+            var format = 'png';
+
+            function slug(s) {
+                return String(s).trim().toLowerCase().replace(/\s+/g, '-') || 'xcb';
+            }
+
+            function update() {
+                var t = typeEl.value;
+                var sz = sizeEl.value;
+                var n = slug(nameEl.value);
+                var base = cdns[cdnEl.value] || cdns.corecdn;
+                var path = t + '/' + sz + '/' + n + '.' + format;
+                var url = base + '/' + path;
+                urlInput.value = url;
+            }
+
+            urlInput.addEventListener('click', function () {
+                urlInput.select();
             });
+
+            document.querySelectorAll('.format-toggle button').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    document.querySelector('.format-toggle button.active').classList.remove('active');
+                    btn.classList.add('active');
+                    format = btn.getAttribute('data-format');
+                    update();
+                });
+            });
+
+            cdnEl.addEventListener('change', update);
+            typeEl.addEventListener('change', update);
+            sizeEl.addEventListener('change', update);
+            nameEl.addEventListener('input', update);
+            nameEl.addEventListener('keyup', update);
+
+            copyBtn.addEventListener('click', function () {
+                var url = urlInput.value;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(function () {
+                        copyBtn.textContent = 'Copied!';
+                        copyBtn.classList.add('copied');
+                        setTimeout(function () {
+                            copyBtn.textContent = 'Copy';
+                            copyBtn.classList.remove('copied');
+                        }, 1500);
+                    });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = url;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    copyBtn.textContent = 'Copied!';
+                    copyBtn.classList.add('copied');
+                    setTimeout(function () {
+                        copyBtn.textContent = 'Copy';
+                        copyBtn.classList.remove('copied');
+                    }, 1500);
+                }
+            });
+
+            update();
+        })();
     </script>
 </body>
 </html>
