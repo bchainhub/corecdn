@@ -1,21 +1,2 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="512.00012"
-   height="553.79608"
-   viewBox="0 0 512.00012 553.79608"
-   version="1.1"
-   xml:space="preserve"
-   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs1" />
-    <g
-   transform="matrix(4.83019,0,0,4.83019,-381.58501,-302.72477)"
-   id="g1">
-        <path
-   d="m 125.19923,154.78855 7.55845,-28.04133 17.89507,-6.44112 4.45092,-16.47975 -0.15197,-0.40886 -17.61492,6.34053 12.69133,-47.084549 h -35.99349 l -16.598191,61.446469 -13.857877,4.98741 -4.578551,16.98974 13.847061,-4.98362 -9.781745,36.21306 H 178.85903 L 185,154.78855 Z"
-   style="fill:#ef4800;fill-rule:nonzero;stroke-width:0.540816"
-   id="path1" />
-    </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m225.629 411.352 33.7539-125.223 79.9141-28.7617 19.875-73.5938-0.675781-1.82422-78.6641 28.3125 56.6758-210.262h-160.734l-74.1211 274.398-61.8867 22.2734-20.4453 75.8672 61.8359-22.2539-43.6797 161.715h427.781l27.4219-100.648z" fill="#ef4800"/></svg>
