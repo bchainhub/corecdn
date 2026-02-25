@@ -1,0 +1,61 @@
+name: Report bug
+description: Report a bug or incorrect behaviour
+title: "[Bug]: "
+labels: [bug]
+assignees: [rastislavcore]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Please check the [README](https://github.com/bchainhub/corecdn#readme) for requirements and usage.**
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear description of what the bug is
+      placeholder: What went wrong?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To reproduce
+      description: Steps to reproduce the behaviour
+      placeholder: |
+        1. Step one
+        2. Step two
+        3. Step three
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What actually happened
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Inkscape version, librsvg version (e.g. rsvg-convert --version)
+      placeholder: e.g. macOS 14, Inkscape 1.3, librsvg 2.61
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, logs, or other details
+      placeholder: Optional
