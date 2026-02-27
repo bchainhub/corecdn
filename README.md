@@ -86,12 +86,15 @@ The script `scripts/export.sh` generates all size variants from the base SVGs.
 
 ### Overwrite Behavior
 
-By default:
+**Default (no `--overwrite`):**
 
-* Existing generated files are **not overwritten**
-* Only missing files are created
+* Resolution folders are created as needed (e.g. `mark/256`, `badge/64`).
+* For each (base, size), export runs only if at least one of the two outputs is missing; existing SVG/PNG are **not** overwritten.
 
-To regenerate everything:
+**With `--overwrite`:**
+
+* All sizes (16–1024) are produced for every base file.
+* Missing resolution folders are created; existing SVG/PNG files are overwritten.
 
 ```bash
 ./scripts/export.sh --overwrite
