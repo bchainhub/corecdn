@@ -254,6 +254,7 @@ spawn_limited() {
 }
 
 wait_all() {
+	[[ -n "${pids+x}" ]] || pids=()
 	for pid in "${pids[@]}"; do
 		wait "$pid"
 	done
@@ -456,8 +457,14 @@ for svg in "${SVG_FILES[@]}"; do
 		out_svg="${out_dir}/${base_name}.svg"
 		out_png="${out_dir}/${base_name}.png"
 
-		mkdir -p "$out_dir"
+		if [[ "$OVERWRITE" -eq 0 ]]; then
+			# Default: skip only when both output files already exist (create folder if missing)
+			if [[ -f "$out_svg" && -f "$out_png" ]]; then
+				continue
+			fi
+		fi
 
+		mkdir -p "$out_dir"
 		spawn_limited process_one_size \
 			"$svg" "$size" "$out_svg" "$out_png"
 	done
