@@ -434,11 +434,12 @@ progress_reporter &
 PROGRESS_PID=$!
 # Ensure Ctrl+C and normal exit kill the progress reporter so it doesn't run forever
 trap 'kill "$PROGRESS_PID" 2>/dev/null; exit 130' INT TERM
-trap 'kill "$PROGRESS_PID" 2>/dev/null' EXIT
+trap 'kill "$PROGRESS_PID" 2>/dev/null || true' EXIT
 
 # ==============================
 # MAIN LOOP
 # ==============================
+MINIFY_FILES=()
 for svg in "${SVG_FILES[@]}"; do
 	if svg_has_g_tag "$svg"; then
 		echo "Warning: $svg contains <g> tag(s) and will not be processed. Ungroup in Inkscape (Object → Ungroup) and save, then re-run."
@@ -467,6 +468,10 @@ for svg in "${SVG_FILES[@]}"; do
 		mkdir -p "$out_dir"
 		spawn_limited process_one_size \
 			"$svg" "$size" "$out_svg" "$out_png"
+		# Track this run's exports in the parent shell; workers run in subshells.
+		if [[ "$OVERWRITE" -eq 0 ]]; then
+			MINIFY_FILES+=("$out_svg" "svg" "$out_png" "png")
+		fi
 	done
 
 	echo
@@ -477,18 +482,19 @@ kill "$PROGRESS_PID" 2>/dev/null || true
 [[ "$VERBOSE" -eq 0 ]] && printf "\n"
 
 # ==============================
-# SECOND PASS: MINIFY ALL GENERATED FILES
+# SECOND PASS: MINIFY THIS RUN'S EXPORTS (ALL OUTPUTS WITH --overwrite)
 # ==============================
 # Minification runs after the full Inkscape batch. Progress bar (normal) or per-file (verbose).
-MINIFY_FILES=()
 if [[ "$MINIFY_SVG" -eq 1 && -n "$SCOUR_BIN" ]] || [[ "$MINIFY_PNG" -eq 1 && -n "$OXIPNG_BIN" ]]; then
-	for size in "${SIZES[@]}"; do
-		for dir in "$ROOT_DIR"/mark "$ROOT_DIR"/badge; do
-			[[ ! -d "$dir/$size" ]] && continue
-			for f in "$dir/$size"/*.svg; do [[ -f "$f" ]] && MINIFY_FILES+=("$f" "svg"); done
-			for f in "$dir/$size"/*.png; do [[ -f "$f" ]] && MINIFY_FILES+=("$f" "png"); done
+	if [[ "$OVERWRITE" -eq 1 ]]; then
+		for size in "${SIZES[@]}"; do
+			for dir in "$ROOT_DIR"/mark "$ROOT_DIR"/badge; do
+				[[ ! -d "$dir/$size" ]] && continue
+				for f in "$dir/$size"/*.svg; do [[ -f "$f" ]] && MINIFY_FILES+=("$f" "svg"); done
+				for f in "$dir/$size"/*.png; do [[ -f "$f" ]] && MINIFY_FILES+=("$f" "png"); done
+			done
 		done
-	done
+	fi
 	MINIFY_TOTAL=$((${#MINIFY_FILES[@]} / 2))
 	if [[ "$MINIFY_TOTAL" -gt 0 ]]; then
 		echo "Minifying $MINIFY_TOTAL generated file(s)..."
