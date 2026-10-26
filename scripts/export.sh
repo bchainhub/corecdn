@@ -8,6 +8,8 @@ OVERWRITE=0
 VERBOSE=0
 MINIFY_SVG=1
 MINIFY_PNG=1
+GENERATE_WEBP=1
+GENERATE_JXL=1
 NOADVERT=0
 ANALYZE=0
 # SVG resize: 0 = scale from base in Python only (better alignment); 1 = Inkscape export then normalize
@@ -15,6 +17,33 @@ INKSCAPE_SVG=0
 
 for arg in "$@"; do
 	case "$arg" in
+		-h|--help)
+			cat <<'USAGE'
+Usage: ./scripts/export.sh [options]
+
+  --overwrite     Regenerate existing outputs
+  --verbose       Show export and minification details
+  --svgnominify   Skip SVG minification
+  --pngnominify   Skip PNG minification
+  --skip-webp     Do not generate lossless WebP files (default: enabled)
+  --skip-jxl      Do not generate lossless JPEG XL files (default: enabled)
+  --noadvert      Strip branding from base SVGs only, then exit
+  --analyze       Check base SVGs only, then exit
+  --inkscape-svg  Resize SVGs using Inkscape before normalization
+  -h, --help      Show this help
+
+Set JOBS to limit parallel exports (default: CPU count).
+USAGE
+			exit 0
+			;;
+		--skip-webp)
+			GENERATE_WEBP=0
+			shift
+			;;
+		--skip-jxl)
+			GENERATE_JXL=0
+			shift
+			;;
 		--overwrite)
 			OVERWRITE=1
 			shift
@@ -113,6 +142,24 @@ if [[ "$ANALYZE" -eq 1 ]]; then
 	echo
 	"$PYTHON3_BIN" "${SCRIPT_DIR}/analyze_base_svg.py" "$ROOT_DIR"
 	exit "$?"
+fi
+
+# Check only encoders used by export; analysis and branding modes exit above.
+CWEBP_BIN=""
+CJXL_BIN=""
+if [[ "$GENERATE_WEBP" -eq 1 ]]; then
+	CWEBP_BIN="$(command -v cwebp || true)"
+	if [[ -z "$CWEBP_BIN" ]]; then
+		echo "Error: cwebp not found in PATH (required unless --skip-webp is supplied)." >&2
+		exit 1
+	fi
+fi
+if [[ "$GENERATE_JXL" -eq 1 ]]; then
+	CJXL_BIN="$(command -v cjxl || true)"
+	if [[ -z "$CJXL_BIN" ]]; then
+		echo "Error: cjxl not found in PATH (required unless --skip-jxl is supplied)." >&2
+		exit 1
+	fi
 fi
 
 # ==============================
@@ -340,6 +387,30 @@ export_square_png() {
 		--export-filename="$output_png"
 }
 
+# A complete export includes only the enabled raster formats.
+outputs_exist() {
+	[[ -f "$1" && -f "$2" ]] || return 1
+	[[ "$GENERATE_WEBP" -eq 0 || -f "${2%.png}.webp" ]] || return 1
+	[[ "$GENERATE_JXL" -eq 0 || -f "${2%.png}.jxl" ]]
+}
+
+export_raster_formats() {
+	local png="$1"
+	if [[ "$GENERATE_WEBP" -eq 1 ]]; then
+		# -exact also preserves RGB values beneath fully transparent pixels.
+		"$CWEBP_BIN" -lossless -z 9 -exact "$png" -o "${png%.png}.webp" || {
+			echo "Error: WebP encoding failed: $png" >&2
+			return 1
+		}
+	fi
+	if [[ "$GENERATE_JXL" -eq 1 ]]; then
+		"$CJXL_BIN" "$png" "${png%.png}.jxl" -d 0 -e 9 || {
+			echo "Error: JPEG XL encoding failed: $png" >&2
+			return 1
+		}
+	fi
+}
+
 # ==============================
 # PROCESS ONE SIZE
 # ==============================
@@ -351,7 +422,7 @@ process_one_size() {
 	local out_svg="$3"
 	local out_png="$4"
 
-	if [[ "$OVERWRITE" -eq 0 && -f "$out_svg" && -f "$out_png" ]]; then
+	if [[ "$OVERWRITE" -eq 0 ]] && outputs_exist "$out_svg" "$out_png"; then
 		log "	→ ${size}px (skipped, exists)"
 		return
 	fi
@@ -369,6 +440,8 @@ process_one_size() {
 	fi
 	log "	    [${size}px] resize done; Inkscape PNG..."
 	export_square_png "$out_svg" "$size" "$out_png"
+	# Encode the original rendered pixels before the second-pass minification.
+	export_raster_formats "$out_png"
 	log "	    [${size}px] done."
 }
 
@@ -459,8 +532,8 @@ for svg in "${SVG_FILES[@]}"; do
 		out_png="${out_dir}/${base_name}.png"
 
 		if [[ "$OVERWRITE" -eq 0 ]]; then
-			# Default: skip only when both output files already exist (create folder if missing)
-			if [[ -f "$out_svg" && -f "$out_png" ]]; then
+			# Default: skip only when all enabled outputs exist (create folder if missing)
+			if outputs_exist "$out_svg" "$out_png"; then
 				continue
 			fi
 		fi
