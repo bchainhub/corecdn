@@ -25,6 +25,8 @@ A build script generates multiple square size variants (SVG + PNG) from these so
 [badge|mark]/base/{name}.svg         ← source (SVG only)
 [badge|mark]/[size]/{name}.svg       ← generated (square page)
 [badge|mark]/[size]/{name}.png       ← generated (square image)
+[badge|mark]/[size]/{name}.webp      ← generated (lossless, unless skipped)
+[badge|mark]/[size]/{name}.jxl       ← generated (lossless, unless skipped)
 ```
 
 ### Structure Explanation
@@ -73,12 +75,16 @@ The script `scripts/export.sh` generates all size variants from the base SVGs.
    * Exports:
      * Square SVG
      * Square PNG
+     * Lossless WebP and JPEG XL (from the PNG, before minification)
 
 ### Quiet / Verbose Modes
 
 * By default, the script runs in **quiet mode** (suppresses Inkscape and macOS ColorSync messages).
 * Use `--verbose` to enable normal Inkscape output.
 * Use `--svgnominify` to skip SVG minification (on by default when Scour is installed).
+* Use `--skip-webp` to skip WebP generation (enabled by default; requires `cwebp`).
+* Use `--skip-jxl` to skip JPEG XL generation (enabled by default; requires `cjxl`). Both skip flags together restore SVG/PNG-only export.
+* Use `--help` to list all options.
 * Use `--pngnominify` to skip PNG minification (on by default when oxipng is installed).
 * Use `--noadvert` to run **only** branding removal: strip advertisement/branding attributes (e.g. `xmlns:serif="http://www.serif.com/"` from Affinity) from SVG files in `*/base/` and exit. No export is run. Off by default.
 * Use `--analyze` to **check** all base SVGs in `mark/base` and `badge/base` for correctness (XML, viewBox, no `<g>`, valid path data). Reports malformed path `d` with exact reason (e.g. `invalid_number`, `not_enough_params`). No export is run. Exit code 1 if any file has issues.
@@ -89,8 +95,8 @@ The script `scripts/export.sh` generates all size variants from the base SVGs.
 **Default (no `--overwrite`):**
 
 * Resolution folders are created as needed (e.g. `mark/256`, `badge/64`).
-* For each (base, size), export runs only if at least one of the two outputs is missing; in that case, both outputs are regenerated.
-* Only outputs generated in the current run are minified. Existing complete SVG/PNG pairs are left untouched.
+* For each (base, size), export runs only if any enabled output (SVG, PNG, WebP, or JPEG XL) is missing; in that case, all enabled outputs are regenerated from a fresh PNG before minification.
+* Only outputs generated in the current run are minified. Existing complete sets of enabled outputs are left untouched.
 
 **With `--overwrite`:**
 
@@ -130,6 +136,8 @@ You can combine flags:
 
 * [Inkscape](https://inkscape.org/) — required for PNG export and optionally for SVG export (`--inkscape-svg`). Must be available as `inkscape` in your `PATH`.
 * [librsvg](https://wiki.gnome.org/Projects/LibRsvg) — required for resize + center. Install: `brew install librsvg`. Provides `rsvg-convert`, which resizes each SVG to the target size (e.g. 256×256) while preserving aspect ratio and centering.
+* `cwebp` — required unless `--skip-webp` is supplied. Uses `cwebp -lossless -z 9 -exact input.png -o output.webp`; `-exact` preserves RGB values under fully transparent pixels.
+* `cjxl` — required unless `--skip-jxl` is supplied. Uses `cjxl input.png output.jxl -d 0 -e 9`.
 * [Scour](https://github.com/scour-project/scour) — for SVG minification; must be available as `scour` in your `PATH`
 * [oxipng](https://github.com/oxipng/oxipng) — for lossless PNG minification; must be available as `oxipng` in your `PATH`
 * Python 3 — only for `--analyze` (checking base SVGs). Not used for export.
