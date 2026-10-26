@@ -148,6 +148,12 @@
             gap: 0.25rem;
             margin-top: 0.75rem;
         }
+        .format-kind {
+            display: block;
+            margin-top: 0.35rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
         .format-toggle button {
             padding: 0.35rem 0.6rem;
             font-size: 0.8rem;
@@ -186,7 +192,7 @@
 </head>
 <body>
     <h1>Core CDN</h1>
-    <p class="tagline">PNG & SVG assets — pick type, size, and name to get your URL.</p>
+    <p class="tagline">Image assets — pick type, size, and name to get your URL.</p>
 
     <div class="card">
         <div class="card-title">Build URL</div>
@@ -205,13 +211,13 @@
                     <option value="24">24</option>
                     <option value="32">32</option>
                     <option value="48">48</option>
-                    <option value="64" selected>64</option>
+                    <option value="64">64</option>
                     <option value="72">72</option>
                     <option value="96">96</option>
                     <option value="128">128</option>
                     <option value="144">144</option>
                     <option value="192">192</option>
-                    <option value="256">256</option>
+                    <option value="256" selected>256</option>
                     <option value="512">512</option>
                     <option value="1024">1024</option>
                 </select>
@@ -222,9 +228,12 @@
             </div>
         </div>
         <div class="format-toggle">
-            <button type="button" data-format="png" class="active">PNG</button>
             <button type="button" data-format="svg">SVG</button>
+            <button type="button" data-format="webp" class="active">WebP</button>
+            <button type="button" data-format="jxl">JXL</button>
+            <button type="button" data-format="png">PNG</button>
         </div>
+        <small id="format-kind" class="format-kind" aria-live="polite">WebP: Raster</small>
         <div class="field cdn-field">
             <label for="cdn">CDN</label>
             <select id="cdn">
@@ -266,7 +275,14 @@
             var cdnEl = document.getElementById('cdn');
             var urlInput = document.getElementById('url-input');
             var copyBtn = document.getElementById('copy-btn');
-            var format = 'png';
+            var formatKind = document.getElementById('format-kind');
+            var format = 'webp';
+            var formatNames = {
+                svg: 'Scalable Vector Graphics',
+                webp: 'WebP',
+                jxl: 'JPEG XL',
+                png: 'Portable Network Graphics'
+            };
 
             function slug(s) {
                 return String(s).trim().toLowerCase().replace(/\s+/g, '-') || 'xcb';
@@ -280,6 +296,7 @@
                 var path = t + '/' + sz + '/' + n + '.' + format;
                 var url = base + '/' + path;
                 urlInput.value = url;
+                formatKind.textContent = formatNames[format] + ': ' + (format === 'svg' ? 'Vector' : 'Raster');
             }
 
             urlInput.addEventListener('click', function () {
